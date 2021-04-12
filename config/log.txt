@@ -1,0 +1,1 @@
+|INFO|2021-03-26 23:52:51,098|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.

@@ -1,0 +1,19 @@
+fxcm:
+  token: "7b7968bfd297e4f512b68ddddef9869be07f98e6"
+  log_level: "error" 
+  server_mode: "demo"
+  log_file: "log.txt"
+  order_amount: 100
+  devises: "EUR/USD"
+
+yahoo_finance:
+  tickers: "EURUSD=X"
+  period: "12d"
+  interval: "5m"
+  group_by: "ticker"
+  auto_adjust: True
+  threads: True
+  proxy: None
+
+prophet:
+  predictions: 30  
