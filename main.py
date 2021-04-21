@@ -1,8 +1,6 @@
-from flask import Flask
 from services.bot_services import *
-
-#app = Flask(__name__)
-
+from services.bot_order import TradingOrder
+from time import sleep
 global buy_flag
 global sell_flag
 
@@ -21,7 +19,3 @@ if __name__ == "__main__":
 
               
         sleep(300)
-        #app.run(debug=True)
-
-      
-

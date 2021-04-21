@@ -24,8 +24,3 @@ class Yahoo_Model(object):
 class Prophet_Model(object):
     def __init__(self, predictions):
         self.predictions = predictions
-
-
-# class Models_Encoder(JSONEncoder):
-#     def default(self, o):
-#         return o.__dict__

@@ -16,4 +16,9 @@ yahoo_finance:
   proxy: None
 
 prophet:
-  predictions: 30  
+  predictions: 30
+
+chart:
+  parameters:
+    begin: -500
+    end: -30
