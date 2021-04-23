@@ -1,19 +1,25 @@
 import pandas as pd
 from fbprophet import Prophet
 import yfinance as yf
-from config.bot_config import *
+from config.bot_config import prophet_config, yahoo_config, config_yaml
+
+
+yahoo_configuration = yahoo_config(config_yaml)
+prophet_configuration = prophet_config(config_yaml)
 
 
 def get_data():
     df = yf.download(
-        tickers = yahoo_config(config_yaml).tickers,
-        period = yahoo_config(config_yaml).period,
-        interval = yahoo_config(config_yaml).interval,
-        group_by = yahoo_config(config_yaml).group_by,
+        tickers = yahoo_configuration.tickers,
+        period = yahoo_configuration.period,
+        interval = yahoo_configuration.interval,
+        group_by = yahoo_configuration.group_by,
         auto_adjust = True,
         threads = True,
         proxy = None
     )
+    df = df.dropna()
+    df.index = df.index.strftime('%Y/%m/%d %H:%M:%S')
     return df
 
 
@@ -36,6 +42,6 @@ def prediction(data):
     ma_liste = mise_en_forme(data['Close'])
     dt['y'] = ma_liste
     m = Prophet().fit(dt)
-    future = m.make_future_dataframe(periods=prophet_config(config_yaml).predictions)
+    future = m.make_future_dataframe(periods=prophet_configuration.predictions)
     frcst = m.predict(future)
     return frcst

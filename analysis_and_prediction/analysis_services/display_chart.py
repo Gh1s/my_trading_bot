@@ -1,21 +1,25 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from main import df, forecast
-from config.bot_config import chart_parameters, config_yaml
+from analysis_and_prediction.analysis_services.bot_analysis import get_data, prediction
+from config.bot_config import yahoo_config, config_yaml, chart_parameters
 
 
+chart_parameters_config = chart_parameters(config_yaml)
+yahoo_configuration = yahoo_config(config_yaml)
+df = get_data()
+forecast = prediction(df)
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-begin_param = chart_parameters(config_yaml).begin
-end_param = chart_parameters(config_yaml).end
+begin_param = chart_parameters_config.begin
+end_param = chart_parameters_config.end
 
 
 app.layout = html.Div(children=[
     html.H1(children='My Trading Bot'),
 
     html.Div(children='''
-        Trading Bot Analisis.
+        Trading Bot Analisys.
     '''),
 
     dcc.Graph(

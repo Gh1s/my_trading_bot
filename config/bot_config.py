@@ -1,7 +1,7 @@
 import yaml
 
 
-yaml_file = open('config/config.yml')
+yaml_file = open('config.yml')
 config_yaml = yaml.load(yaml_file, Loader=yaml.FullLoader)
 
 
@@ -39,3 +39,10 @@ class chart_parameters:
     def __init__(self, config_yaml):
         self.begin = config_yaml['chart']['parameters']['begin']
         self.end = config_yaml['chart']['parameters']['end']
+
+
+yahoo_configuration = yahoo_config(config_yaml)
+fxcm_connection_configuration = fxcm_connection_config(config_yaml)
+fxcm_trading_configuration = fxcm_trading_config(config_yaml)
+prophet_configuration = prophet_config(config_yaml)
+chart_parameters_config = chart_parameters(config_yaml)
