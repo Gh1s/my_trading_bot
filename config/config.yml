@@ -1,3 +1,5 @@
+debug_log: True
+
 fxcm:
   token: "7b7968bfd297e4f512b68ddddef9869be07f98e6"
   log_level: "error" 

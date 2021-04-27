@@ -9,7 +9,7 @@ fxcm_trading_configuration = fxcm_trading_config(config_yaml)
 
 
 def TradingOrder(upper_limit, lower_limit, mean_limit):
-    print("################  Trading Bot started  ##############################")
+    #print("################  Trading Bot started  ##############################")
     logging.info("################  Trading Bot started  ##############################")
 
     try:
@@ -26,46 +26,46 @@ def TradingOrder(upper_limit, lower_limit, mean_limit):
         tradePosition = con.get_open_positions().T
 
         if tradePosition.empty is True and current_price_ask > upper_limit:
-            print("############  Short Short Short  ################")
-            #logging.warning("############  Short Short Short  ################")
+            #print("############  Short Short Short  ################")
+            logging.warning("############  Short Short Short  ################")
             con.create_market_sell_order(fxcm_trading_configuration.devises,
                                          fxcm_trading_configuration.order_amount)
 
 
         elif tradePosition.empty is True and current_price_bid < lower_limit:
-            print("############  Buy Buy Buy  ################")
-            #logging.warning("############  Buy Buy Buy  ################")
+            #print("############  Buy Buy Buy  ################")
+            logging.warning("############  Buy Buy Buy  ################")
             con.create_market_buy_order(fxcm_trading_configuration.devises,
                                         fxcm_trading_configuration.order_amount)
 
 
         elif tradePosition.empty is not True and tradePosition[0][15] == True:
-            print("############  We have a current buy open position  ################")
-            #logging.info("############  We have a current buy open position  ################")
+            #print("############  We have a current buy open position  ################")
+            logging.info("############  We have a current buy open position  ################")
             if current_price_ask >= mean_limit:
-                print("############  Close the current buy position  ################")
-                #logging.warning("############  Close the current buy position  ################")
+                #print("############  Close the current buy position  ################")
+                logging.warning("############  Close the current buy position  ################")
             else:
-                print("############  Close price not reached stay in the current buy position  ################")
-                #logging.info("############  Close price not reached stay in the current buy position  ################")
+                #print("############  Close price not reached stay in the current buy position  ################")
+                logging.info("############  Close price not reached stay in the current buy position  ################")
 
 
         elif tradePosition.empty is not True and tradePosition[0][15] == False:
-            print("############  We have a current sell open position  ################")
-            #logging.info("############  We have a current sell open position  ################")
+            #print("############  We have a current sell open position  ################")
+            logging.info("############  We have a current sell open position  ################")
             if current_price_bid <= mean_limit:
-                print("############  Close the current sell position  ################")
-                #logging.warning("############  Close the current sell position  ################")
+                #print("############  Close the current sell position  ################")
+                logging.warning("############  Close the current sell position  ################")
             else:
-                print("############  Close price not reached stay in the current sell position  ################")
-                #logging.info("############  Close price not reached stay in the current sell position  ################")
+                #print("############  Close price not reached stay in the current sell position  ################")
+                logging.info("############  Close price not reached stay in the current sell position  ################")
 
 
         else:
-            print("############  Stand By Position  ################")
-            #logging.warning("############  Stand By Position  ################")
+            #print("############  Stand By Position  ################")
+            logging.warning("############  Stand By Position  ################")
 
 
     except:
-        print("############  Failed to connect to FXCM  ################")
-        #logging.error("############  Failed to connect to FXCM  ################")
+        #print("############  Failed to connect to FXCM  ################")
+        logging.error("############  Failed to connect to FXCM  ################")

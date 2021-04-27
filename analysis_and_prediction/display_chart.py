@@ -26,7 +26,7 @@ app.layout = html.Div(children=[
     html.H1(children='My Trading Bot'),
 
     html.Div(children='''
-        Trading Bot Analysis.
+       EUR/USD  analysis.
     '''),
 
     dcc.Graph(
