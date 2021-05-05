@@ -1,8 +1,7 @@
 import dash
-import flask
-import json
 import dash_core_components as dcc
 import dash_html_components as html
+from flask_apscheduler import APScheduler
 from analysis_and_prediction.analysis_services.bot_analysis import get_data, prediction
 from config.bot_config import yahoo_config, config_yaml, chart_parameters
 
@@ -13,8 +12,13 @@ begin_param = chart_parameters_config.begin
 end_param = chart_parameters_config.end
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app.config
+scheduler = APScheduler()
+scheduler.init_app(app)
+scheduler.start()
 
 
+@scheduler.task('cron', id='get-data', minute='30')
 def get_predictions_and_data():
     df = get_data()
     forecast = prediction(df)
@@ -44,6 +48,7 @@ app.layout = html.Div(children=[
         }
     )
 ])
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)

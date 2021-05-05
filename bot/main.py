@@ -8,17 +8,21 @@ from time import sleep
 if __name__ == "__main__":   
     while True:
         log_mode_debug()
-        #print("############  Get the data ###############")
+        print("############  Get the data ###############")
         logging.info("############  Get the data ###############")
         df = get_data()
-        #print("############  forecast beginning ###############")
+        print("############  forecast beginning ###############")
         logging.info("############  forecast beginning ###############")
         forecast = prediction(df)
         yhat_upper = get_last_value(forecast['yhat_upper'])
         yhat_lower = get_last_value(forecast['yhat_lower'])
         yhat = get_last_value(forecast['yhat'])
-        TradingOrder(yhat_upper, yhat_lower, yhat)
-        logging.info("############  Displaying the chart on http://localhost:8050 ###############")
+        try:
+            TradingOrder(yhat_upper, yhat_lower, yhat)
+        except:
+            print("############  Failed to connect to FXCM  ################")
+            logging.error("############  Failed to connect to FXCM  ################")
+        #logging.info("############  Displaying the chart on http://localhost:8050 ###############")
+        logging.info("############  Trading Bot in Action ###############")
 
-
-        sleep(300)
+        sleep(600)

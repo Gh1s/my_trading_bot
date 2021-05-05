@@ -1,12 +1,14 @@
 import numpy as np
+from bot.models.bot_models import Buy_Position, Sell_Position, Closed_Position
 
 
 def Trading_Analysis(current_price, upper_limit, lower_limit, mean_limit):
     buy_flag = False
     sell_flag = False
-    buy_position = []
-    sell_position = []
-    closed_position = []
+    buy_position = {}
+    sell_position = {}
+    closed_position = {}
+
 
     for i in range(1, len(current_price)):
 

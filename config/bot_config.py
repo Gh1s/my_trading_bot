@@ -41,6 +41,10 @@ class chart_parameters:
         self.end = config_yaml['chart']['parameters']['end']
 
 
+class Scheduler_Config:
+    SCHEDULER_API_ENABLED = True
+
+
 yahoo_configuration = yahoo_config(config_yaml)
 fxcm_connection_configuration = fxcm_connection_config(config_yaml)
 fxcm_trading_configuration = fxcm_trading_config(config_yaml)

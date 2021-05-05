@@ -13,3 +13,6 @@ def log_mode_debug():
                             handlers=[logging.StreamHandler()])
 
 
+def display_logs(print_msg, log_msg):
+    print(print_msg)
+    logging.info(log_msg)
