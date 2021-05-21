@@ -1,10 +1,11 @@
-from python
-WORKDIR /my_trading_bot
-COPY requirements.txt requirements.txt
-COPY analysis_and_prediction/* analysis_and_prediction/
-COPY bot/* bot/
-COPY config/* config/
-RUN pip install -r requirements.txt
+FROM python:alpine
+WORKDIR /my_trading_bot/
+COPY /my_trading_bot/*py /my_trading_bot/
+COPY /my_trading_bot/bot/requirements.txt /my_trading_bot/bot/requirements.txt
+COPY /my_trading_bot/analysis_and_prediction/*py /my_trading_bot/analysis_and_prediction/
+COPY /my_trading_bot/bot/*py /my_trading_bot/bot/
+COPY /my_trading_bot/config/*py /my_trading_bot/config/
+RUN pip install --upgrade pip
+RUN pip install -U -r /my_trading_bot/bot/requirements.txt
 EXPOSE 8050
-RUN python /my_trading_bot/bot/main.py
-RUN python /my_trading_bot/analysis_and_prediction/display_chart.py
+CMD [ "python", "bot/main.py" ]

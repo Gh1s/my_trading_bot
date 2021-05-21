@@ -9,7 +9,7 @@ fxcm:
   devises: "EUR/USD"
 
 yahoo_finance:
-  tickers: "EURUSD=X"
+  tickers: "BTC-USD"
   period: "12d"
   interval: "5m"
   group_by: "ticker"

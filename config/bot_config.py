@@ -1,8 +1,10 @@
 import yaml
+import logging
 
 
 yaml_file = open('config/config.yml')
 config_yaml = yaml.load(yaml_file, Loader=yaml.FullLoader)
+logger = logging.getLogger("Trading-Bot")
 
 
 class fxcm_connection_config:

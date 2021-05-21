@@ -1,4 +1,4 @@
-from config.bot_config import config_yaml
+from config.bot_config import config_yaml, logger
 import logging
 
 
@@ -15,4 +15,4 @@ def log_mode_debug():
 
 def display_logs(print_msg, log_msg):
     print(print_msg)
-    logging.info(log_msg)
+    logger.info(log_msg)
