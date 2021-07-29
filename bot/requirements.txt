@@ -1,9 +1,10 @@
+matplotlib
+pystan==2.19.1.1
+prophet
 pandas
 dash
 flask_apscheduler
 yfinance
-fxcmpy
+fxcmpy==1.2.6
 numpy
 pyyaml
-pystan
-prophet

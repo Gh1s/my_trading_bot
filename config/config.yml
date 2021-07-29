@@ -1,15 +1,17 @@
 debug_log: True
 
 fxcm:
-  token: "7b7968bfd297e4f512b68ddddef9869be07f98e6"
+  token: "f5565edfaf2048dda9e4502e4331a4c0521b0199"
   log_level: "error" 
   server_mode: "demo"
   log_file: "log.txt"
   order_amount: 100
   devises: "EUR/USD"
+  period: "m5"
+  column_open: ['bidclose']
 
 yahoo_finance:
-  tickers: "BTC-USD"
+  tickers: "EURUSD=X"
   period: "12d"
   interval: "5m"
   group_by: "ticker"
@@ -18,9 +20,10 @@ yahoo_finance:
   proxy: None
 
 prophet:
-  predictions: 30
+  predictions: 1
+  changepoint: 0.001
 
 chart:
   parameters:
-    begin: -500
-    end: -30
+    begin: -250
+    end: -1

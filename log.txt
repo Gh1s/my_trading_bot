@@ -23,3 +23,192 @@
 |ERROR|2021-05-05 20:51:02,181|Socket returns unknown error.
 |ERROR|2021-05-05 20:51:03,617|Socket returns unknown error.
 |ERROR|2021-05-05 21:07:19,667|Connection error: Connection refused by the server
+|ERROR|2021-06-01 18:57:49,455|FXCM reject req trading/get_model with status 520 and msg <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en-US"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
+<head>
+<meta http-equiv="refresh" content="0">
+
+<title>api-demo.fxcm.com | 520: Web server is returning an unknown error</title>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" id="cf_styles-css" href="/cdn-cgi/styles/main.css" type="text/css" media="screen,projection" />
+
+
+</head>
+<body>
+<div id="cf-wrapper">
+
+    
+
+    <div id="cf-error-details" class="p-0">
+        <header class="mx-auto pt-10 lg:pt-6 lg:px-8 w-240 lg:w-full mb-8">
+            <h1 class="inline-block sm:block sm:mb-2 font-light text-60 lg:text-4xl text-black-dark leading-tight mr-2">
+              
+              <span class="cf-error-type">Error</span>
+              <span class="cf-error-code">520</span>
+            </h1>
+            <span class="inline-block sm:block font-mono text-15 lg:text-sm lg:leading-relaxed">Ray ID: 6586e49208ffd4d5 &bull;</span>
+            <span class="inline-block sm:block font-mono text-15 lg:text-sm lg:leading-relaxed">2021-06-01 07:57:49 UTC</span>
+            <h2 class="text-gray-600 leading-1.3 text-3xl font-light">Web server is returning an unknown error</h2>
+        </header>
+        
+        <div class="my-8 bg-gradient-gray">
+            <div class="w-240 lg:w-full mx-auto">
+                <div class="clearfix md:px-8">
+                  
+<div id="cf-browser-status" class=" relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    <span class="cf-icon-browser block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-ok w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+  </div>
+  <span class="md:block w-full truncate">You</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">Browser</h3>
+  <span class="leading-1.3 text-2xl text-green-success">Working</span>
+</div>
+
+<div id="cf-cloudflare-status" class=" relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    <span class="cf-icon-cloud block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-ok w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+  </div>
+  <span class="md:block w-full truncate">Noumea</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">Cloudflare</h3>
+  <span class="leading-1.3 text-2xl text-green-success">Working</span>
+</div>
+
+<div id="cf-host-status" class="cf-error-source relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    <span class="cf-icon-server block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-error w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+  </div>
+  <span class="md:block w-full truncate">api-demo.fxcm.com</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">Host</h3>
+  <span class="leading-1.3 text-2xl text-red-error">Error</span>
+</div>
+
+                </div>
+              
+            </div>
+        </div>
+
+        <div class="w-240 lg:w-full mx-auto mb-8 lg:px-8">
+            <div class="clearfix">
+                <div class="w-1/2 md:w-full float-left pr-6 md:pb-10 md:pr-0 leading-relaxed">
+                    <h2 class="text-3xl font-normal leading-1.3 mb-4">What happened?</h2>
+                    <p>There is an unknown connection issue between Cloudflare and the origin web server. As a result, the web page can not be displayed.</p>
+                </div>
+              
+                <div class="w-1/2 md:w-full float-left leading-relaxed">
+                    <h2 class="text-3xl font-normal leading-1.3 mb-4">What can I do?</h2>
+                          <h3 class="text-15 font-semibold mb-2">If you are a visitor of this website:</h3>
+      <p class="mb-6">Please try again in a few minutes.</p>
+
+      <h3 class="text-15 font-semibold mb-2">If you are the owner of this website:</h3>
+      <p><span>There is an issue between Cloudflare's cache and your origin web server. Cloudflare monitors for these errors and automatically investigates the cause. To help support the investigation, you can pull the corresponding error log from your web server and submit it our support team.  Please include the Ray ID (which is at the bottom of this error page).</span> <a rel="noopener noreferrer" href="https://support.cloudflare.com/hc/en-us/articles/200171936-Error-520">Additional troubleshooting resources</a>.</p>
+                </div>
+            </div>
+              
+        </div>
+
+        <div class="cf-error-footer cf-wrapper w-240 lg:w-full py-10 sm:py-4 sm:px-8 mx-auto text-center sm:text-left border-solid border-0 border-t border-gray-300">
+  <p class="text-13">
+    <span class="cf-footer-item sm:block sm:mb-1">Cloudflare Ray ID: <strong class="font-semibold">6586e49208ffd4d5</strong></span>
+    <span class="cf-footer-separator sm:hidden">&bull;</span>
+    <span class="cf-footer-item sm:block sm:mb-1"><span>Your IP</span>: 115.126.178.226</span>
+    <span class="cf-footer-separator sm:hidden">&bull;</span>
+    <span class="cf-footer-item sm:block sm:mb-1"><span>Performance &amp; security by</span> <a rel="noopener noreferrer" href="https://www.cloudflare.com/5xx-error-landing" id="brand_link" target="_blank">Cloudflare</a></span>
+    
+  </p>
+</div><!-- /.error-footer -->
+
+
+    </div>
+</div>
+</body>
+</html>
+
+.
+|ERROR|2021-06-01 18:59:07,391|Connection error: Connection refused by the server
+|ERROR|2021-07-02 06:26:30,945|Socket returns unknown error.
+|ERROR|2021-07-02 06:26:54,978|Socket returns unknown error.
+|ERROR|2021-07-02 06:32:42,011|Socket returns unknown error.
+|ERROR|2021-07-05 18:41:39,031|Socket returns unknown error.
+|ERROR|2021-07-05 18:42:12,211|Socket returns unknown error.
+|ERROR|2021-07-05 18:43:15,691|Socket returns unknown error.
+|ERROR|2021-07-05 18:44:08,427|Socket returns unknown error.
+|ERROR|2021-07-05 20:55:10,600|Socket returns unknown error.
+|ERROR|2021-07-05 20:56:48,514|Socket returns unknown error.
+|ERROR|2021-07-05 20:59:55,578|Socket returns unknown error.
+|ERROR|2021-07-05 21:10:42,223|Connection error: Connection refused by the server
+|ERROR|2021-07-12 21:14:16,883|Unknown instrument: eur/usd
+|ERROR|2021-07-13 06:14:19,670|Connection error: Connection refused by the server
+|INFO|2021-07-13 21:20:24,916|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-07-13 21:20:24,916|Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+|INFO|2021-07-13 21:20:24,916|Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+|INFO|2021-07-13 21:20:24,959|n_changepoints greater than number of observations. Using 7.
+|INFO|2021-07-16 19:31:58,514|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-16 19:32:36,233|packet queue is empty, aborting
+|INFO|2021-07-16 19:34:30,311|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-07-16 19:35:00,351|Dash is running on http://127.0.0.1:8050/
+
+|INFO|2021-07-16 19:35:15,994|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-07-16 19:37:30,000|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-07-16 19:39:43,741|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-16 19:40:07,465|packet queue is empty, aborting
+|INFO|2021-07-16 19:40:19,223|Dash is running on http://127.0.0.1:8050/
+
+|INFO|2021-07-16 19:40:39,152|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-07-16 19:47:24,971|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-16 19:47:46,966|packet queue is empty, aborting
+|INFO|2021-07-16 19:47:58,854|Dash is running on http://127.0.0.1:8050/
+
+|INFO|2021-07-16 19:48:21,442|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-17 12:12:24,274|Connection error: Authentication timed out. Please try again.
+|INFO|2021-07-19 18:42:56,832|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-07-19 18:57:20,847|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-19 18:57:41,767|packet queue is empty, aborting
+|INFO|2021-07-19 19:29:47,288|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-19 20:01:36,225|Connection error: Connection refused by the server
+|INFO|2021-07-19 20:19:16,898|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-19 20:19:38,106|packet queue is empty, aborting
+|INFO|2021-07-19 20:23:11,957|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-19 20:23:33,780|packet queue is empty, aborting
+|INFO|2021-07-19 20:29:20,464|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-19 20:29:51,017|packet queue is empty, aborting
+|INFO|2021-07-19 20:30:57,935|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-19 20:40:41,629|Connection error: Connection refused by the server
+|ERROR|2021-07-19 20:40:44,045|Connection error: Connection refused by the server
+|ERROR|2021-07-19 20:40:48,168|Connection error: Connection refused by the server
+|ERROR|2021-07-19 20:40:53,569|Connection error: Connection refused by the server
+|ERROR|2021-07-19 20:40:58,407|Connection error: Connection refused by the server
+|ERROR|2021-07-19 20:41:03,846|Connection error: Connection refused by the server
+|ERROR|2021-07-19 20:41:08,613|Connection error: Connection refused by the server
+|ERROR|2021-07-19 20:41:13,898|Connection error: Connection refused by the server
+|ERROR|2021-07-19 20:46:51,528|packet queue is empty, aborting
+|ERROR|2021-07-19 21:03:55,862|Connection error: Connection refused by the server
+|ERROR|2021-07-19 21:03:57,789|Connection error: Connection refused by the server
+|ERROR|2021-07-19 21:04:01,360|Connection error: Connection refused by the server
+|ERROR|2021-07-19 21:04:06,006|Connection error: Connection refused by the server
+|ERROR|2021-07-19 21:04:10,920|Connection error: Connection refused by the server
+|ERROR|2021-07-19 21:04:15,579|Connection error: Connection refused by the server
+|INFO|2021-07-19 21:06:07,796|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-19 21:06:40,877|packet queue is empty, aborting
+|INFO|2021-07-19 21:50:30,064|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-07-19 21:51:27,571|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-19 21:51:48,584|packet queue is empty, aborting
+|INFO|2021-07-20 18:34:25,059|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-20 18:34:48,876|packet queue is empty, aborting
+|INFO|2021-07-20 19:44:58,146|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-07-20 19:59:48,324|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-20 20:00:05,443|packet queue is empty, aborting
+|INFO|2021-07-20 20:06:49,967|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-07-20 20:13:02,683|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-20 20:13:23,018|packet queue is empty, aborting
+|INFO|2021-07-26 21:08:59,686|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-07-26 21:09:25,205|packet queue is empty, aborting

@@ -35,6 +35,7 @@ class yahoo_config:
 class prophet_config:
     def __init__(self, config_yaml):
         self.predictions = config_yaml['prophet']['predictions']
+        self.changepoint = config_yaml['prophet']['changepoint']
 
 
 class chart_parameters:
