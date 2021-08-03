@@ -17,5 +17,4 @@ RUN pip install fxcmpy==1.2.6
 RUN conda install -c anaconda pyyaml
 RUN pip install pip install "python-socketio[asyncio_client]"==4.4.0
 
-EXPOSE 8050
 CMD [ "python", "bot/main.py" ]

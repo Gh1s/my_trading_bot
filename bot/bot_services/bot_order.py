@@ -1,5 +1,6 @@
 import fxcmpy
-from analysis_and_prediction.analysis_services.bot_analysis import prediction, sell_analysis, buy_analysis
+from analysis_and_prediction.analysis_services.bot_analysis import prediction, sell_analysis, buy_analysis, \
+    dataframe_to_list
 from config.bot_config import fxcm_connection_config, fxcm_trading_config, config_yaml, logger
 from config.bot_config import fxcm_trading_configuration, fxcm_connection_configuration
 
@@ -104,6 +105,7 @@ def deconnexion(forecast, connexion, sell_position, buy_position, trend):
     yhat = '{0:.6f}'.format(yhat)
     close = float(forecast['close'].iloc[-2:-1])
     close = '{0:.6f}'.format(close)
+    trend = dataframe_to_list(trend)
     logger.info("##############   Price: " + str(close) + "  ##############")
     logger.info("##############   yhat_upper: " + str(yhat_upper) + "  ##############")
     logger.info("##############  yhat_med: " + str(yhat) + "  ##############")
