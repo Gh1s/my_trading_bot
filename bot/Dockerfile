@@ -1,7 +1,5 @@
-FROM continuumio/miniconda3
-
+FROM continuumio/anaconda3
 WORKDIR /my_trading_bot
-
 COPY analysis_and_prediction/* analysis_and_prediction/
 COPY analysis_and_prediction/analysis_services/* analysis_and_prediction/analysis_services/
 COPY bot/* bot/
@@ -15,6 +13,7 @@ RUN conda install -c conda-forge dash
 RUN conda install -c conda-forge flask-apscheduler
 RUN pip install fxcmpy==1.2.6
 RUN conda install -c anaconda pyyaml
-RUN pip install pip install "python-socketio[asyncio_client]"==4.4.0
+RUN pip install python-socketio==4.6.1
+RUN pip install python-engineio==3.9
 
 CMD [ "python", "bot/main.py" ]

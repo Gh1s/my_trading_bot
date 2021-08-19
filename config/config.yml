@@ -1,29 +1,25 @@
 debug_log: True
 
 fxcm:
-  token: "eee8d79405eff525f40bd6f32fb2b650a701836c"
+  token: "d128bbccc360344261da7f2b76d5bc55244a90ef"
   log_level: "error" 
   server_mode: "demo"
   log_file: "log.txt"
   order_amount: 100
   devises: "EUR/USD"
   period: "m5"
-  column_open: ['bidclose']
-
-yahoo_finance:
-  tickers: "EURUSD=X"
-  period: "12d"
-  interval: "5m"
-  group_by: "ticker"
-  auto_adjust: True
-  threads: True
-  proxy: None
+  number: 10000
 
 prophet:
   predictions: 1
-  changepoint: 0.001
+  changepoint: 0.05
 
 chart:
   parameters:
-    begin: -250
+    begin: -3000
     end: -1
+
+yfinance:
+  tickers: "EURUSD=X"
+  period: "1mo"
+  interval: "5m"

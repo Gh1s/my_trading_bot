@@ -16,4 +16,4 @@ if __name__ == "__main__":
         except:
             logger.error("############  Failed to connect to FXCM  ################")
 
-        sleep(900)
+        sleep(600)

@@ -1,27 +1,16 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
+import yfinance as yf
 from prophet import Prophet
-#import yfinance as yf
-from config.bot_config import prophet_config, yahoo_config, config_yaml
+from config.bot_config import prophet_configuration, yahoo_config
 
 
-yahoo_configuration = yahoo_config(config_yaml)
-prophet_configuration = prophet_config(config_yaml)
-
-
-# def get_data():
-#     df = yf.download(
-#         tickers = yahoo_configuration.tickers,
-#         period = yahoo_configuration.period,
-#         interval = yahoo_configuration.interval,
-#         group_by = yahoo_configuration.group_by,
-#         auto_adjust = True,
-#         threads = True,
-#         proxy = None
-#     )
-#     df = df.dropna()
-#     df.index = df.index.strftime('%Y/%m/%d %H:%M:%S')
-#     return df
+def get_yahoo_data(ticker):
+    df = yf.download(
+        tickers=ticker,
+        period=yahoo_config.period,
+        interval=yahoo_config.interval)
+    return df
 
 
 def mise_en_forme(data):
@@ -36,8 +25,12 @@ def prediction(data):
     dt['ds'] = data.index
     ma_liste = mise_en_forme(data['Close'])
     dt['y'] = ma_liste
-    m = Prophet(changepoint_prior_scale=prophet_configuration.changepoint).fit(dt)
+    dt['cap'] = 8.5
+    m = Prophet(growth="logistic",
+                changepoint_prior_scale = 0.001,
+                seasonality_prior_scale = 10.0).fit(dt)
     future = m.make_future_dataframe(periods=prophet_configuration.predictions)
+    future['cap'] = 8.5
     frcst = m.predict(future)
     frcst['close'] = dt['y']
     return frcst

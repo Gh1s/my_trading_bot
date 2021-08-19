@@ -6,20 +6,12 @@ from config.bot_config import fxcm_trading_configuration, fxcm_connection_config
 from config.bot_config import logger
 
 
-def TradingOrder():
+def BotTrader():
     logger.info("##############################  Trading Bot started  ##############################")
 
     df = get_yahoo_data(yahoo_config.tickers)
     df.index = df.index.strftime('%Y/%m/%d %H:%M:%S')
     forecast = prediction(df)
-
-    con = fxcmpy.fxcmpy(access_token=fxcm_connection_configuration.token,
-                  log_level="error",
-                  server=fxcm_connection_configuration.server_mode,
-                  log_file=fxcm_connection_configuration.log_file)
-
-    logger.info("############################## Connected to FXCM  ##############################")
-    con.subscribe_market_data(fxcm_trading_configuration.devises)
 
     mean_limit = float(forecast['yhat'].iloc[-2:-1])
     mean_limit = '{0:.6f}'.format(mean_limit)
@@ -30,12 +22,32 @@ def TradingOrder():
     sell_position = sell_analysis(forecast)
     buy_position = buy_analysis(forecast)
 
+
+    con = fxcmpy.fxcmpy(access_token=fxcm_connection_configuration.token,
+                  log_level="error",
+                  server=fxcm_connection_configuration.server_mode,
+                  log_file=fxcm_connection_configuration.log_file)
+
+    logger.info("############################## Connected to FXCM  ##############################")
+    con.subscribe_market_data(fxcm_trading_configuration.devises)
+
+
+    mean_limit = float(forecast['yhat'].iloc[-2:-1])
+    mean_limit = '{0:.6f}'.format(mean_limit)
+    close = float(forecast['close'].iloc[-2:-1])
+    close = '{0:.6f}'.format(close)
+    sell_position = sell_analysis(forecast)
+    buy_position = buy_analysis(forecast)
+    trend = forecast['trend'].iloc[-10:-1]
+    list_trend_temp = dataframe_to_list(trend)
+
+
     tradePosition = con.get_open_positions().T
 
     logger.info("#######   Check if a position is open  ########")
     if tradePosition.empty is True:
         logger.info("#######   No open position check if price > upper limit or < lower limit  ########")
-        if -1 in sell_position and trend < mean_limit:
+        if -1 in sell_position:
             logger.info("############  Current price > upper limit => Short Short Short  ################")
             con.create_market_sell_order(fxcm_trading_configuration.devises,
                                          fxcm_trading_configuration.order_amount)
@@ -43,7 +55,7 @@ def TradingOrder():
             con.get_open_positions().T
             deconnexion(forecast, con, sell_position, buy_position, trend)
 
-        elif -1 in buy_position and trend > mean_limit:
+        elif -1 in buy_position:
             logger.info("############  Current price < lower limit => Buy Buy Buy  ################")
             con.create_market_buy_order(fxcm_trading_configuration.devises,
                                         fxcm_trading_configuration.order_amount)
@@ -104,8 +116,7 @@ def deconnexion(forecast, connexion, sell_position, buy_position, trend):
     yhat = '{0:.6f}'.format(yhat)
     close = float(forecast['close'].iloc[-2:-1])
     close = '{0:.6f}'.format(close)
-    trend = float(forecast['trend'].iloc[-2:-1])
-    trend = '{0:.6f}'.format(trend)
+    trend = dataframe_to_list(trend)
     logger.info("##############   Price: " + str(close) + "  ##############")
     logger.info("##############   yhat_upper: " + str(yhat_upper) + "  ##############")
     logger.info("##############  yhat_med: " + str(yhat) + "  ##############")
