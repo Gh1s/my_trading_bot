@@ -12,11 +12,12 @@ fxcm:
 
 prophet:
   predictions: 1
-  changepoint: 0.05
+  changepoint: 0.001
+  seasonality: 10.0
 
 chart:
   parameters:
-    begin: -3000
+    begin: -5000
     end: -1
 
 yfinance:

@@ -1,7 +1,6 @@
 import fxcmpy
-
 from analysis_and_prediction.analysis_services.bot_analysis import prediction, sell_analysis, buy_analysis, \
-    dataframe_to_list, get_yahoo_data
+    get_yahoo_data
 from config.bot_config import fxcm_trading_configuration, fxcm_connection_configuration, yahoo_config
 from config.bot_config import logger
 
@@ -59,7 +58,7 @@ def TradingOrder():
     elif tradePosition.empty is not True:
         if tradePosition[0][14]:
             logger.info("############  We have a current buy open position  ################")
-            if close >= mean_limit:
+            if close >= mean_limit or trend < mean_limit:
                 logger.info("############  Close the current buy position  ################")
                 con.close_all_for_symbol(fxcm_trading_configuration.devises)
                 logger.info("############  Get closed position information down below  ################")
@@ -71,7 +70,7 @@ def TradingOrder():
 
         elif not tradePosition[0][14]:
             logger.info("############  We have a current sell open position  ################")
-            if close <= mean_limit:
+            if close <= mean_limit or trend > mean_limit:
                 logger.info("############  Close the current sell position  ################")
                 con.close_all_for_symbol(fxcm_trading_configuration.devises)
                 logger.info("############  Get closed position information down below  ################")

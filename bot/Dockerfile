@@ -12,6 +12,7 @@ RUN conda install -c conda-forge prophet
 RUN conda install -c conda-forge dash
 RUN conda install -c conda-forge flask-apscheduler
 RUN pip install fxcmpy==1.2.6
+RUN pip install yfinance
 RUN conda install -c anaconda pyyaml
 RUN pip install python-socketio==4.6.1
 RUN pip install python-engineio==3.9
