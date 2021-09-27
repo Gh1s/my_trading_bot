@@ -16,3 +16,8 @@ def log_mode_debug():
 def display_logs(print_msg, log_msg):
     print(print_msg)
     logger.info(log_msg)
+
+
+def get_instruments():
+    liste_instruments = ['EUR/USD', 'USD/JPY', 'GBP/USD', 'USD/CHF', 'EUR/CHF', 'AUD/USD', 'USD/CAD', 'NZD/USD']
+    return liste_instruments

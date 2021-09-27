@@ -26,12 +26,14 @@ def mise_en_forme(data):
 def prediction(data):
     dt = pd.DataFrame()
     dt['ds'] = data.index
-    ma_liste = mise_en_forme(data['Close'])
+    #ma_liste = mise_en_forme(data['Close'])
+    ma_liste = mise_en_forme(data['close'])
     dt['y'] = ma_liste
-    dt['cap'] = 8.5
-    m = Prophet(changepoint_prior_scale=0.001, seasonality_prior_scale=10.0).fit(dt)
+    #dt['cap'] = 8.5
+    #m = Prophet(growth='logistic').fit(dt)
+    m = Prophet().fit(dt)
     future = m.make_future_dataframe(periods=prophet_configuration.predictions)
-    future['cap'] = 8.5
+    #future['cap'] = 8.5
     frcst = m.predict(future)
     frcst['close'] = dt['y']
     return frcst
@@ -59,6 +61,15 @@ def buy_analysis(df):
     buy_signal = dataframe_to_list(buy_signal)
     return buy_signal
 
+
+def close_position(df):
+    df['close_signal'] = np.where(df['close'] > df['yhat'], 1, 0)
+    df['close_position'] = df['close_signal'].diff()
+    close_signal = df['close_position'].iloc[-5:-1]
+    close_signal = dataframe_to_list(close_signal)
+    return close_signal
+
+
 def get_best_parameters(df):
     param_grid = {
         'changepoint_prior_scale': [0.001, 0.01, 0.1, 0.5],
@@ -82,3 +93,31 @@ def get_best_parameters(df):
     print(tuning_results)
     best_params = all_params[np.argmin(rmses)]
     return best_params
+
+
+def dataframe_list_to_decimal(data):
+    list_temp = []
+    for i in data:
+        n = '{0:.6f}'.format(i)
+        list_temp.append(n)
+    return list_temp
+
+def trend_analysis_buy(list):
+    cpt = 0
+    signal = ""
+    for i in range(0, (len(list) - 1)):
+        if list[i] < list[i + 1]:
+            cpt = cpt + 1
+    if cpt == len(list) - 1:
+        signal = "BUY"
+    return signal
+
+def trend_analysis_sell(list):
+    cpt = 0
+    signal = ""
+    for i in range(0, (len(list) - 1)):
+        if list[i] > list[i + 1]:
+            cpt = cpt + 1
+    if cpt == len(list) - 1:
+        signal = "SELL"
+    return signal

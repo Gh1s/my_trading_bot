@@ -1,14 +1,14 @@
 debug_log: True
 
 fxcm:
-  token: "d128bbccc360344261da7f2b76d5bc55244a90ef"
+  token: "0678dc5a8c32abc0c7df915e0d6ccfdbcf59f948"
   log_level: "error" 
   server_mode: "demo"
   log_file: "log.txt"
   order_amount: 100
   devises: "EUR/USD"
   period: "m5"
-  number: 10000
+  number: 5000
 
 prophet:
   predictions: 1

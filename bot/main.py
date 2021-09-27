@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
         try:
             forecast = TradingOrder()
-        except:
-            logger.error("############  Failed to connect to FXCM  ################")
+        except Exception as e:
+            logger.error("############  Failed to connect to FXCM, {}  ################".format(e))
 
         sleep(600)

@@ -3,8 +3,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from flask_apscheduler import APScheduler
 
-from analysis_and_prediction.analysis_services.bot_analysis import dataframe_to_list, get_yahoo_data
-from analysis_and_prediction.analysis_services.bot_analysis import prediction
+from analysis_and_prediction.analysis_services.bot_analysis import dataframe_to_list, get_yahoo_data, prediction
 from bot.bot_services.bot_services import log_mode_debug
 from config.bot_config import config_yaml, chart_parameters, logger
 from config.bot_config import fxcm_connection_config, fxcm_trading_config, yahoo_config
@@ -67,13 +66,13 @@ if __name__ == '__main__':
     logger.info("############  Get the data ###############")
     logger.info("############  forecast beginning ###############")
     yhat_upper = float(forecast['yhat_upper'].iloc[-2:-1])
-    #yhat_upper = '{0:.6f}'.format(yhat_upper)
+    yhat_upper = '{0:.6f}'.format(yhat_upper)
     yhat_lower = float(forecast['yhat_lower'].iloc[-2:-1])
-    #yhat_lower = '{0:.6f}'.format(yhat_lower)
+    yhat_lower = '{0:.6f}'.format(yhat_lower)
     yhat = float(forecast['yhat'].iloc[-2:-1])
-    #yhat = '{0:.6f}'.format(yhat)
-    close = dataframe_to_list(forecast['close'][-1:])
-    #close = '{0:.6f}'.format(close)
+    yhat = '{0:.6f}'.format(yhat)
+    close = float(forecast['close'][-1:])
+    close = '{0:.6f}'.format(close)
     logger.info("##############   Price: " + str(close) + "  ##############")
     logger.info("##############   yhat_upper: " + str(yhat_upper) + "  ##############")
     logger.info("##############  yhat_med: " + str(yhat) + "  ##############")
