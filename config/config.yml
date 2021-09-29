@@ -7,8 +7,8 @@ fxcm:
   log_file: "log.txt"
   order_amount: 100
   devises: "EUR/USD"
-  period: "m5"
-  number: 5000
+  period: "m1"
+  number: 10000
 
 prophet:
   predictions: 1

@@ -712,3 +712,41 @@
 |ERROR|2021-09-24 23:42:49,383|packet queue is empty, aborting
 |INFO|2021-09-27 20:49:06,187|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
 |ERROR|2021-09-27 20:49:55,357|packet queue is empty, aborting
+|INFO|2021-09-28 20:03:40,812|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-28 20:31:55,467|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-28 20:39:13,654|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-28 20:41:03,126|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-28 20:41:03,127|Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+|INFO|2021-09-28 20:46:25,072|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-28 20:46:25,073|Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+|INFO|2021-09-28 20:55:51,448|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-28 20:55:51,449|Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+|INFO|2021-09-28 21:00:49,443|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-09-28 21:01:20,162|packet queue is empty, aborting
+|ERROR|2021-09-28 21:44:41,537|Connection error: Connection refused by the server
+|INFO|2021-09-28 21:45:33,827|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-28 21:45:33,827|Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+|ERROR|2021-09-28 21:45:53,581|packet queue is empty, aborting
+|INFO|2021-09-28 21:48:48,101|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-28 21:58:41,784|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-28 22:09:15,133|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-28 22:22:36,512|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-09-28 22:23:07,035|packet queue is empty, aborting
+|INFO|2021-09-28 22:26:51,883|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-09-28 22:27:18,166|packet queue is empty, aborting
+|INFO|2021-09-28 22:37:43,971|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-28 22:37:43,972|Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+|INFO|2021-09-28 22:51:55,074|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-28 23:02:12,008|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|ERROR|2021-09-28 23:03:15,845|packet queue is empty, aborting
+|INFO|2021-09-29 18:52:46,883|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-29 18:56:32,550|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-29 19:34:23,907|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-29 19:34:23,908|Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+|INFO|2021-09-29 19:41:27,210|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-29 19:52:58,222|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-29 20:30:24,963|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-29 20:30:24,963|Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+|ERROR|2021-09-29 20:31:49,575|packet queue is empty, aborting
+|INFO|2021-09-29 20:54:45,038|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+|INFO|2021-09-29 20:54:45,038|Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
