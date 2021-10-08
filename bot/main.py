@@ -2,13 +2,17 @@ from time import sleep
 import sys
 import fxcmpy
 from bot.bot_services.bot_order import TradingOrder
-from bot.bot_services.bot_services import log_mode_debug, deconnexion
-from config.bot_config import logger, fxcm_connection_configuration, fxcm_trading_configuration
+from bot.bot_services.bot_services import deconnexion
+from config.bot_config import logger, Config
+
+
+fxcm_connection_configuration = Config().fxcm_connection_config
+fxcm_trading_configuration = Config().fxcm_trading_config
 
 
 if __name__ == "__main__":
     while True:
-        log_mode_debug()
+        #log_mode_debug()
         logger.info("############  Get the data ###############")
         logger.info("############  forecast beginning ###############")
         logger.info("############  Get the instruments  ###############")

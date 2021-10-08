@@ -1,5 +1,8 @@
-from config.bot_config import config_yaml, logger
+from config.bot_config import logger, Config
 import logging
+
+
+config_yaml = Config().config_yaml
 
 
 def log_mode_debug():

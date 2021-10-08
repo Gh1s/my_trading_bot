@@ -1,19 +1,13 @@
 import itertools
 import numpy as np
 import pandas as pd
-import yfinance as yf
 from prophet import Prophet
-from prophet.diagnostics import performance_metrics
 from prophet.diagnostics import cross_validation
-from config.bot_config import prophet_configuration, yahoo_config
+from prophet.diagnostics import performance_metrics
+from config.bot_config import Config
 
 
-def get_yahoo_data(ticker):
-    df = yf.download(
-        tickers=ticker,
-        period=yahoo_config.period,
-        interval=yahoo_config.interval)
-    return df
+prophet_configuration = Config().prophet_config
 
 
 def mise_en_forme(data):

@@ -1,9 +1,11 @@
 from analysis_and_prediction.analysis_services.bot_analysis import prediction, sell_analysis, buy_analysis, \
     dataframe_list_to_decimal, trend_analysis_sell, trend_analysis_buy, close_position
 from bot.bot_services.bot_services import check_open_devise
-from config.bot_config import fxcm_trading_configuration
-from config.bot_config import logger
+from config.bot_config import Config, logger
 import sys
+
+
+fxcm_trading_configuration = Config().fxcm_trading_config
 
 
 def TradingOrder(connexion, devises):
@@ -34,13 +36,17 @@ def TradingOrder(connexion, devises):
                         .format(devises))
             if -1 in sell_position and trend_analysis_sell(trend) == 'SELL':
                 logger.info("############  Current price > upper limit => Short Short Short  ################")
-                connexion.create_market_sell_order(devises, fxcm_trading_configuration.order_amount)
+                #connexion.create_market_sell_order(devises, fxcm_trading_configuration.order_amount)
+                connexion.open_trade(symbol=devises, amount=fxcm_trading_configuration.order_amount, is_buy=False,
+                                     time_in_force="GTC", order_type="AtMarket", is_in_pips=True, limit=15, stop=-50)
                 logger.info("############  Get open position information down below  ################")
                 connexion.get_open_positions().T
 
             elif -1 in buy_position and trend_analysis_buy(trend) == 'BUY':
                 logger.info("############  Current price < lower limit => Buy Buy Buy  ################")
-                connexion.create_market_buy_order(devises, fxcm_trading_configuration.order_amount)
+                #connexion.create_market_buy_order(devises, fxcm_trading_configuration.order_amount)
+                connexion.open_trade(symbol=devises, amount=fxcm_trading_configuration.order_amount, is_buy=True,
+                                     time_in_force="GTC", order_type="AtMarket", is_in_pips=True, limit=15, stop=-50)
                 logger.info("############  Get open position information down below  ################")
                 connexion.get_open_positions().T
 

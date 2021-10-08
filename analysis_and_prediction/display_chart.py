@@ -2,18 +2,16 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from flask_apscheduler import APScheduler
-
-from analysis_and_prediction.analysis_services.bot_analysis import dataframe_to_list, get_yahoo_data, prediction
+from analysis_and_prediction.analysis_services.bot_analysis import prediction
 from bot.bot_services.bot_services import log_mode_debug
-from config.bot_config import config_yaml, chart_parameters, logger
-from config.bot_config import fxcm_connection_config, fxcm_trading_config, yahoo_config
+from config.bot_config import Config, logger
 
-chart_parameters_config = chart_parameters(config_yaml)
+
+chart_parameters_config = Config().chart_parameters
 begin_param = chart_parameters_config.begin
 end_param = chart_parameters_config.end
-fxcm_connection_configuration = fxcm_connection_config(config_yaml)
-fxcm_trading_configuration = fxcm_trading_config(config_yaml)
-yahoo_configuration = yahoo_config
+fxcm_connection_configuration = Config().fxcm_connection_config
+fxcm_trading_configuration = Config().fxcm_trading_config
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -27,7 +25,6 @@ scheduler = APScheduler()
 def get_predictions_and_data():
 
     logger.info("##############################  Chart Analysis Started  ##############################")
-    df = get_yahoo_data(yahoo_config.tickers)
     df.index = df.index.strftime('%Y/%m/%d %H:%M:%S')
     forecast = prediction(df)
 
