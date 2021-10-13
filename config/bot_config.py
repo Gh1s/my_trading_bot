@@ -1,7 +1,7 @@
 import logging
 import os
 import yaml
-from config.bot_models import Fxcm_Trading_Config, Fxcm_Connection_Config, Prophet_Config, Chart_Parameters
+from config.bot_models import Fxcm_Trading_Config, Fxcm_Connection_Config, Prophet_Config, Chart_Parameters, Debug_Config
 
 logger = logging.getLogger('configuration')
 
@@ -14,6 +14,7 @@ class Config:
     fxcm_connection_config = None
     prophet_config = None
     chart_parameters = None
+    debug_conf = None
 
     # Singleton
     def __new__(cls):
@@ -50,9 +51,13 @@ class Config:
         print("#Config# : apply_config")
         logger.info("extracting config to class")
         if self.config_yaml['debug_log']:
-            logging.basicConfig(level=logging.DEBUG)
+            logging.basicConfig(level=logging.DEBUG,
+                                format="%(asctime)s [%(levelname)s] %(name)-12s - %(message)s",
+                                handlers=[logging.StreamHandler()])
         else:
-            logging.basicConfig(level=logging.INFO)
+            logging.basicConfig(level=logging.INFO,
+                                format="%(asctime)s [%(levelname)s] %(name)-12 - %(message)s",
+                                handlers=[logging.StreamHandler()])
 
         self.fxcm_connection_config = Fxcm_Connection_Config(self.config_yaml)
         self.fxcm_trading_config = Fxcm_Trading_Config(self.config_yaml)

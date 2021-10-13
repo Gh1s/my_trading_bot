@@ -38,3 +38,8 @@ class Chart_Parameters:
 
 class Scheduler_Config:
     SCHEDULER_API_ENABLED = True
+
+
+class Debug_Config:
+    def __init__(self, config_yaml):
+        self.debug = config_yaml['debug_log']
