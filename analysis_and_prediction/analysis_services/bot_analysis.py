@@ -43,7 +43,7 @@ def dataframe_to_list(dataframe):
 def sell_analysis(df):
     df['sell_signal'] = np.where(df['close'] > df['yhat_upper'], 1, 0)
     df['sell_position'] = df['sell_signal'].diff()
-    sell_signal = df['sell_position'].iloc[-10:-1]
+    sell_signal = df['sell_position'].iloc[-5:-1]
     sell_signal = dataframe_to_list(sell_signal)
     return sell_signal
 
@@ -51,7 +51,7 @@ def sell_analysis(df):
 def buy_analysis(df):
     df['buy_signal'] = np.where(df['close'] < df['yhat_lower'], 1, 0)
     df['buy_position'] = df['buy_signal'].diff()
-    buy_signal = df['buy_position'].iloc[-10:-1]
+    buy_signal = df['buy_position'].iloc[-5:-1]
     buy_signal = dataframe_to_list(buy_signal)
     return buy_signal
 
@@ -59,7 +59,7 @@ def buy_analysis(df):
 def close_position(df):
     df['close_signal'] = np.where(df['close'] > df['yhat'], 1, 0)
     df['close_position'] = df['close_signal'].diff()
-    close_signal = df['close_position'].iloc[-10:-1]
+    close_signal = df['close_position'].iloc[-5:-1]
     close_signal = dataframe_to_list(close_signal)
     return close_signal
 

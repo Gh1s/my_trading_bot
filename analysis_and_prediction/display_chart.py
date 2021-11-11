@@ -3,8 +3,9 @@ import dash_core_components as dcc
 import dash_html_components as html
 from flask_apscheduler import APScheduler
 from analysis_and_prediction.analysis_services.bot_analysis import prediction
-from bot.bot_services.bot_services import log_mode_debug
+#from bot.bot_services.bot_services import log_mode_debug
 from config.bot_config import Config, logger
+import fxcmpy
 
 
 chart_parameters_config = Config().chart_parameters
@@ -25,6 +26,13 @@ scheduler = APScheduler()
 def get_predictions_and_data():
 
     logger.info("##############################  Chart Analysis Started  ##############################")
+    connexion = fxcmpy.fxcmpy(access_token=fxcm_connection_configuration.token,
+                              log_level="error",
+                              server=fxcm_connection_configuration.server_mode,
+                              log_file=fxcm_connection_configuration.log_file)
+    df = connexion.get_candles(fxcm_trading_configuration.devises, period=fxcm_trading_configuration.period,
+                               number=fxcm_trading_configuration.number)
+    df['close'] = df[["bidclose", "askclose"]].mean(axis=1)
     df.index = df.index.strftime('%Y/%m/%d %H:%M:%S')
     forecast = prediction(df)
 
@@ -42,7 +50,7 @@ app.layout = html.Div(children=[
         id='trading-order',
         figure={
             "data": [
-                {'x': forecast['ds'][begin_param:end_param], 'y': df['Close'][begin_param:end_param], 'type': 'line', 'name': 'Close Price'},
+                {'x': forecast['ds'][begin_param:end_param], 'y': forecast['close'][begin_param:end_param], 'type': 'line', 'name': 'Close Price'},
                 {'x': forecast['ds'][begin_param:end_param], 'y': forecast['yhat_upper'][begin_param:end_param], 'type': 'line', 'name': 'Higher Line'},
                 {'x': forecast['ds'][begin_param:end_param], 'y': forecast['yhat_lower'][begin_param:end_param], 'type': 'line', 'name': 'Lower Line'},
                 {'x': forecast['ds'][begin_param:end_param], 'y': forecast['yhat'][begin_param:end_param], 'type': 'line', 'name': 'Median Line'},
@@ -59,7 +67,7 @@ app.layout = html.Div(children=[
 
 
 if __name__ == '__main__':
-    log_mode_debug()
+    #log_mode_debug()
     logger.info("############  Get the data ###############")
     logger.info("############  forecast beginning ###############")
     yhat_upper = float(forecast['yhat_upper'].iloc[-2:-1])

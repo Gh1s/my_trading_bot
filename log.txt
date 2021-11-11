@@ -750,3 +750,14 @@
 |ERROR|2021-09-29 20:31:49,575|packet queue is empty, aborting
 |INFO|2021-09-29 20:54:45,038|Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
 |INFO|2021-09-29 20:54:45,038|Disabling weekly seasonality. Run prophet with weekly_seasonality=True to override this.
+|ERROR|2021-10-27 20:41:31,546|Error in get_candles: Illegal period: 5m.
+|INFO|2021-10-27 20:48:26,438|Disabling yearly seasonality. Run NeuralProphet with yearly_seasonality=True to override this.
+|INFO|2021-10-27 20:48:26,438|Auto-set batch_size to 64
+|INFO|2021-10-27 20:48:26,439|Auto-set epochs to 102
+|INFO|2021-10-27 20:48:31,559|lr-range-test results: steep: 3.46E-02, min: 1.92E+00
+|INFO|2021-10-27 20:48:31,559|learning rate range test selected lr: 5.04E-01
+|INFO|2021-10-27 20:56:05,372|Disabling yearly seasonality. Run NeuralProphet with yearly_seasonality=True to override this.
+|INFO|2021-10-27 20:56:05,373|Auto-set batch_size to 64
+|INFO|2021-10-27 20:56:05,373|Auto-set epochs to 102
+|INFO|2021-10-27 20:56:10,482|lr-range-test results: steep: 3.70E-02, min: 2.37E+00
+|INFO|2021-10-27 20:56:10,483|learning rate range test selected lr: 5.92E-01

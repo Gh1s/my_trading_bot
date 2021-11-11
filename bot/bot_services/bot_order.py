@@ -10,6 +10,8 @@ fxcm_trading_configuration = Config().fxcm_trading_config
 
 def TradingOrder(connexion, devises):
     logger.info("##############################  Trading Bot started  ##############################")
+    logger.info("############  Analysis for the following devises: {0}  ###############"
+                  .format(fxcm_trading_configuration.devises))
 
     df = connexion.get_candles(devises, period=fxcm_trading_configuration.period,
                                number=fxcm_trading_configuration.number)
@@ -36,7 +38,6 @@ def TradingOrder(connexion, devises):
                     .format(devises))
         if -1 in sell_position and trend_analysis_sell(trend) == 'SELL':
             logger.info("############  Current price > upper limit => Short Short Short  ################")
-            # connexion.create_market_sell_order(devises, fxcm_trading_configuration.order_amount)
             connexion.open_trade(symbol=devises, amount=fxcm_trading_configuration.order_amount, is_buy=False,
                                  time_in_force="GTC", order_type="AtMarket", is_in_pips=True, limit=15, stop=-50)
             logger.info("############  Get open position information down below  ################")
@@ -44,7 +45,6 @@ def TradingOrder(connexion, devises):
 
         elif -1 in buy_position and trend_analysis_buy(trend) == 'BUY':
             logger.info("############  Current price < lower limit => Buy Buy Buy  ################")
-            # connexion.create_market_buy_order(devises, fxcm_trading_configuration.order_amount)
             connexion.open_trade(symbol=devises, amount=fxcm_trading_configuration.order_amount, is_buy=True,
                                  time_in_force="GTC", order_type="AtMarket", is_in_pips=True, limit=15, stop=-50)
             logger.info("############  Get open position information down below  ################")
@@ -63,14 +63,16 @@ def TradingOrder(connexion, devises):
             if -1 in sell_position and trend_analysis_sell(trend) == 'SELL':
                 logger.info("############  Current price > upper limit => Short Short Short {0}  ################"
                             .format(devises))
-                connexion.create_market_sell_order(devises, fxcm_trading_configuration.order_amount)
+                connexion.open_trade(symbol=devises, amount=fxcm_trading_configuration.order_amount, is_buy=False,
+                                     time_in_force="GTC", order_type="AtMarket", is_in_pips=True, limit=15, stop=-50)
                 logger.info("############  Get open position information down below  ################")
                 connexion.get_open_positions().T
 
             elif -1 in buy_position and trend_analysis_buy(trend) == 'BUY':
                 logger.info("############  Current price < lower limit => Buy Buy Buy {0}  ################"
                             .format(devises))
-                connexion.create_market_buy_order(devises, fxcm_trading_configuration.order_amount)
+                connexion.open_trade(symbol=devises, amount=fxcm_trading_configuration.order_amount, is_buy=True,
+                                     time_in_force="GTC", order_type="AtMarket", is_in_pips=True, limit=15, stop=-50)
                 logger.info("############  Get open position information down below  ################")
                 connexion.get_open_positions().T
 
@@ -81,11 +83,9 @@ def TradingOrder(connexion, devises):
         elif devises in list_open_devises:
             index_devises = list_open_devises.index(devises)
             if tradePosition[index_devises][14] is True and tradePosition[index_devises][13] == devises:
-
                 logger.info(
                     "############  We have a current buy open position for the following devise: {0}  ################".format(
                         devises))
-                # if 1 in close_list or 1 in sell_position:
                 if 1 in sell_position:
                     logger.info("############  Close the current buy position  ################")
                     connexion.close_all_for_symbol(devises)
@@ -97,7 +97,6 @@ def TradingOrder(connexion, devises):
 
             elif not tradePosition[index_devises][14] and tradePosition[index_devises][13] == devises:
                 logger.info("############  We have a current sell open position  ################")
-                # if -1 in close_list or 1 in buy_position:
                 if 1 in buy_position:
                     logger.info("############  Close the current sell position  ################")
                     connexion.close_all_for_symbol(devises)
