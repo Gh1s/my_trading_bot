@@ -2,7 +2,7 @@ import sys
 from time import sleep
 import fxcmpy
 from bot.bot_services.bot_order import TradingOrder
-from bot.bot_services.bot_services import deconnexion
+#from bot.bot_services.bot_services import deconnexion
 from config.bot_config import logger, Config
 from multiprocessing import Process
 #from bot.bot_services.bot_services import Multi_Devises_Strategy
@@ -13,9 +13,7 @@ fxcm_trading_configuration = Config().fxcm_trading_config
 
 
 def Bot_Starter():
-    logger.info("############  Get the data ###############")
-    logger.info("############  forecast beginning ###############")
-    logger.info("############  Get the instruments  ###############")
+    logger.info("##############################  Trading Bot started  ##############################")
 
     try:
         connexion = fxcmpy.fxcmpy(access_token=fxcm_connection_configuration.token,
@@ -30,12 +28,11 @@ def Bot_Starter():
 
     try:
 
-        forecast, sell_position, buy_position, trend, close_list = TradingOrder(connexion,
-                                                                              fxcm_trading_configuration.devises)
+        TradingOrder(connexion, fxcm_trading_configuration.devises)
         #forecast, sell_position, buy_position, trend, close_list = Multi_Devises_Strategy(connexion)
         logger.info("############  Close connection in progress  ###############")
-        deconnexion(forecast, sell_position, buy_position, trend, close_list)
-        logger.info("############  Close connexion   ###############")
+        #deconnexion(forecast, sell_position, buy_position, trend, close_list)
+        logger.info("############  Close connexion ok   ###############")
         connexion.close()
     except Exception as e:
         logger.error("############  Failed to connect to FXCM, {0}  ################".format(e))

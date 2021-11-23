@@ -6,7 +6,7 @@ fxcm:
   server_mode: "demo"
   log_file: "log.txt"
   order_amount: 100
-  devises: "EUR/USD"
+  devises: ['EUR/USD', 'USD/JPY', 'GBP/USD']
   period: "m5"
   number: 10000
 
