@@ -4,9 +4,6 @@ import logging
 
 logger = logging.getLogger("Trading-Bot")
 
-#yaml_file = open('config/config.yml')
-#config_yaml = yaml.load(yaml_file, Loader=yaml.FullLoader)
-
 
 class Fxcm_Connection_Config:
     def __init__(self, config_yaml):

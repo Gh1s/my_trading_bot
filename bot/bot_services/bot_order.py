@@ -127,4 +127,3 @@ def TradingOrder(connexion, devises):
 
 
     return forecast, sell_position, buy_position, trend, close_list
-
