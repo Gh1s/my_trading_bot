@@ -3,7 +3,6 @@ from multiprocessing import Process
 from time import sleep
 import fxcmpy
 from bot.bot_services.bot_order import TradingOrder
-# from bot.bot_services.bot_services import deconnexion
 from config.bot_config import logger, Config
 
 

@@ -6,9 +6,7 @@ from prophet.diagnostics import cross_validation
 from prophet.diagnostics import performance_metrics
 from config.bot_config import Config
 
-
 prophet_configuration = Config().prophet_config
-
 
 def mise_en_forme(data):
     liste = []

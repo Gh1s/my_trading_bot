@@ -31,19 +31,6 @@ class Config:
 
     def read_config_file(self):
         print("#Config# : read_config_file")
-        #config_path = os.path.isfile("config/config.yml")
-        # if os.path.isfile("config/config.yml"):
-        #     config_path = "config/config.yml";
-        # else:
-        #     config_path = "config/config.yml"
-        #logger.info("read_config_file" + config_path)
-        # with open(config_path, 'r', encoding='utf8') as stream:
-        #     try:
-        #         self.config_yaml = yaml.safe_load(stream)
-        #     except yaml.YAMLError as exc:
-        #         logger.error("Le fichier de configuration yml est invalide.")
-        #         logger.error(exc)
-        #         exit(-1)
         yaml_file = open('config/config.yml')
         self.config_yaml = yaml.load(yaml_file, Loader=yaml.FullLoader)
 
