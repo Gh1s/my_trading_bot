@@ -106,7 +106,8 @@ def TradingOrder(connexion, devises):
                     # Sell the half of the position and let the other half going forward
                     elif 1 in close_position or close > mean_limit:
                         logger.info("############  Close the half of the current buy position  ################")
-                        # Get the trade id here and sell the position
+                        # Close half of the position with the trade id here and sell the position
+                        connexion.close_trade(trade_id=tradePosition[index_devises][2], amount=fxcm_trading_configuration.mean_close_amount)
                         logger.info("############  Get half closed position informations down below  ################")
                         connexion.get_closed_positions().T
                         deconnexion(devise, forecast, sell_position, buy_position, trend, close_list)
@@ -128,7 +129,8 @@ def TradingOrder(connexion, devises):
                     # Sell the half of the position and let the other half going forward
                     elif -1 in close_position or close < mean_limit:
                         logger.info("############  Close the half of the current sell position  ################")
-                        # Get the trade id here and sell the position
+                        # Close half of the position with the trade id here and sell the position
+                        connexion.close_trade(trade_id=tradePosition[index_devises][2], amount=fxcm_trading_configuration.mean_close_amount)
                         logger.info("############  Get half closed position informations down below  ################")
                         connexion.get_closed_positions().T
                         deconnexion(devise, forecast, sell_position, buy_position, trend, close_list)

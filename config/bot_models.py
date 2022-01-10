@@ -16,6 +16,7 @@ class Fxcm_Connection_Config:
 class Fxcm_Trading_Config:
     def __init__(self, config_yaml):
         self.order_amount = config_yaml['fxcm']['order_amount']
+        self.mean_close_amount = config_yaml['fxcm']['mean_close_amount']
         self.devises = config_yaml['fxcm']['devises']
         self.period = config_yaml['fxcm']['period']
         self.number = config_yaml['fxcm']['number']
