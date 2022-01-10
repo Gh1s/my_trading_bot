@@ -43,7 +43,7 @@ if __name__ == "__main__":
     while True:
         p = Process(target=Bot_Starter, name='bot_process')
         p.start()
-        p.join(timeout=450)
+        p.join(timeout=360)
         p.terminate()
         # if p.exitcode is None:
         #     logger.error("############  A problem occured on FXCM server, timeout container reboot in process  ################")
