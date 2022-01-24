@@ -1,16 +1,32 @@
-import sys
-from multiprocessing import Process
 from time import sleep
 import fxcmpy
 from bot.bot_services.bot_order import TradingOrder
 from config.bot_config import logger, Config
-
+from flask import Flask
+from flask_apscheduler import APScheduler
+from multiprocessing import Process
+import sys
 
 fxcm_connection_configuration = Config().fxcm_connection_config
 fxcm_trading_configuration = Config().fxcm_trading_config
+app = Flask(__name__)
+scheduler = APScheduler()
+
+
+@scheduler.task('interval', id='get-data', minutes=5)
+def multi_process_trading():
+    p = Process(target=Bot_Starter, name='bot_process')
+    p.start()
+    p.join(timeout=295)
+    p.terminate()
+    if p.exitcode is None:
+        logger.error(
+            "############  A problem occured on FXCM server, timeout container reboot in process  ################")
+        sys.exit(1)
 
 
 def Bot_Starter():
+    global connexion
     logger.info("##############################  Trading Bot started  ##############################")
 
     try:
@@ -26,12 +42,13 @@ def Bot_Starter():
 
     try:
 
-        TradingOrder(connexion, fxcm_trading_configuration.devises)
-        #forecast, sell_position, buy_position, trend, close_list = Multi_Devises_Strategy(connexion)
-        logger.info("############  Close connection in progress  ###############")
-        #deconnexion(forecast, sell_position, buy_position, trend, close_list)
-        logger.info("############  Close connexion ok   ###############")
-        #connexion.close()
+        for devise in fxcm_trading_configuration.devises:
+            TradingOrder(connexion, devise)
+            # forecast, sell_position, buy_position, trend, close_list = Multi_Devises_Strategy(connexion)
+            logger.info("############  Close connection in progress  ###############")
+            # deconnexion(forecast, sell_position, buy_position, trend, close_list)
+            logger.info("############  Close connexion ok   ###############")
+            # connexion.close()
     except Exception as e:
         logger.error("############  A problem occured when working on FXCM, {0}  ################".format(e))
         connexion.close()
@@ -39,13 +56,6 @@ def Bot_Starter():
 
 
 if __name__ == "__main__":
-    while True:
-        p = Process(target=Bot_Starter, name='bot_process')
-        p.start()
-        p.join(timeout=360)
-        p.terminate()
-        # if p.exitcode is None:
-        #     logger.error("############  A problem occured on FXCM server, timeout container reboot in process  ################")
-        #     sys.exit(1)
-
-        sleep(120)
+    scheduler.init_app(app)
+    scheduler.start()
+    app.run(debug=True)

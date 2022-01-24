@@ -1,6 +1,5 @@
 from config.bot_config import Config, logger
 
-
 fxcm_trading_configuration = Config().fxcm_trading_config
 
 
@@ -31,5 +30,6 @@ def check_open_devise(tradePosition):
     list_open_devises = []
     for elem in tradePosition.iloc[13]:
         list_open_devises.append(elem)
-    logger.info("##############   We have open positions for those devises {0}  ##############".format(list_open_devises))
+    logger.info(
+        "##############   We have open positions for those devises {0}  ##############".format(list_open_devises))
     return list_open_devises
