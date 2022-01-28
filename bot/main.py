@@ -34,11 +34,11 @@ def Bot_Starter():
 
         for devise in fxcm_trading_configuration.devises:
             TradingOrder(connexion, devise)
-            # forecast, sell_position, buy_position, trend, close_list = Multi_Devises_Strategy(connexion)
             logger.info("############  Close connection in progress  ###############")
-            # deconnexion(forecast, sell_position, buy_position, trend, close_list)
-            logger.info("############  Close connexion ok   ###############")
-            # connexion.close()
+        logger.info("############  Trading Analysis finish waiting for next process in 5 min  ###############")
+        connexion.close()
+        logger.info("############  Close connexion ok   ###############")
+        sys.exit(0)
     except Exception as e:
         logger.error("############  A problem occured when working on FXCM, {0}  ################".format(e))
         connexion.close()
@@ -47,6 +47,6 @@ def Bot_Starter():
 
 if __name__ == "__main__":
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(multi_process_trading, 'interval', minutes=5)
+    scheduler.add_job(multi_process_trading, 'interval', minutes=1)
     scheduler.start()
     asyncio.get_event_loop().run_forever()
