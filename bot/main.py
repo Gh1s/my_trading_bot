@@ -1,19 +1,14 @@
-from time import sleep
 import fxcmpy
 from bot.bot_services.bot_order import TradingOrder
 from config.bot_config import logger, Config
-from flask import Flask
-from flask_apscheduler import APScheduler
 from multiprocessing import Process
 import sys
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+import asyncio
 
 fxcm_connection_configuration = Config().fxcm_connection_config
 fxcm_trading_configuration = Config().fxcm_trading_config
-app = Flask(__name__)
-scheduler = APScheduler()
 
-
-@scheduler.task('interval', id='get-data', minutes=5)
 def multi_process_trading():
     p = Process(target=Bot_Starter, name='bot_process')
     p.start()
@@ -51,6 +46,7 @@ def Bot_Starter():
 
 
 if __name__ == "__main__":
-    scheduler.init_app(app)
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(multi_process_trading, 'interval', minutes=5)
     scheduler.start()
-    app.run(debug=True)
+    asyncio.get_event_loop().run_forever()
