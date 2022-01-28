@@ -19,11 +19,6 @@ def multi_process_trading():
     p.start()
     p.join(timeout=295)
     p.terminate()
-    if p.exitcode is None:
-        logger.error(
-            "############  A problem occured on FXCM server, timeout container reboot in process  ################")
-        sys.exit(1)
-
 
 def Bot_Starter():
     global connexion

@@ -13,7 +13,8 @@ RUN conda install -c conda-forge pystan==2.19.1.1
 RUN conda install -c conda-forge prophet
 #RUN pip install prophet
 #RUN conda install -c conda-forge dash
-#RUN conda install -c conda-forge flask-apscheduler
+RUN conda install -c conda-forge flask
+RUN conda install -c conda-forge flask-apscheduler
 RUN pip install fxcmpy==1.2.6
 RUN conda install -c anaconda pyyaml
 #RUN pip install pyyaml
