@@ -15,6 +15,5 @@ RUN pip install fxcmpy==1.2.6
 RUN conda install -c anaconda pyyaml
 RUN conda install -c conda-forge python-socketio==4.6.1
 RUN pip install python-engineio==3.9
-RUN pip install apscheduler
 
 CMD [ "python", "bot/main.py" ]
