@@ -107,7 +107,7 @@ def TradingOrder(devise):
                 logger.info(
                     "############  We have a current buy open position for the following devise: {0}  ################".format(
                         devise))
-                if 1 in sell_position or close > yhat_upper:
+                if 1 in sell_position or float(close) > float(yhat_upper):
                     logger.info("############  Close the current buy position  ################")
                     connexion = connexion_to_fxcm()
                     connexion.close_all_for_symbol(devise)
@@ -117,7 +117,7 @@ def TradingOrder(devise):
                     deconnexion_from_fxcm
 
                 # Sell the half of the position and let the other half going forward
-                elif 1 in close_position or close > mean_limit:
+                elif 1 in close_list or float(close) > float(mean_limit):
                     logger.info("############  Close the half of the current buy position  ################")
                     # Close half of the position with the trade id here and sell the position
                     connexion = connexion_to_fxcm()
@@ -135,7 +135,7 @@ def TradingOrder(devise):
 
             elif not tradePosition[index_devises][14] and tradePosition[index_devises][13] == devise:
                 logger.info("############  We have a current sell open position  ################")
-                if 1 in buy_position or close < yhat_lower:
+                if 1 in buy_position or float(close) < float(yhat_lower):
                     logger.info("############  Close the current sell position  ################")
                     connexion = connexion_to_fxcm()
                     connexion.close_all_for_symbol(devise)
@@ -145,7 +145,7 @@ def TradingOrder(devise):
                     deconnexion_from_fxcm
 
                 # Sell the half of the position and let the other half going forward
-                elif -1 in close_position or close < mean_limit:
+                elif -1 in close_list or float(close) < float(mean_limit):
                     logger.info("############  Close the half of the current sell position  ################")
                     # Close half of the position with the trade id here and sell the position
                     connexion = connexion_to_fxcm()
