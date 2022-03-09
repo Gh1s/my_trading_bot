@@ -118,15 +118,18 @@ def TradingOrder(devise):
 
                 # Sell the half of the position and let the other half going forward
                 elif 1 in close_list or float(close) > float(mean_limit):
-                    logger.info("############  Close the half of the current buy position  ################")
-                    # Close half of the position with the trade id here and sell the position
-                    connexion = connexion_to_fxcm()
-                    connexion.close_trade(trade_id=tradePosition[index_devises][2],
-                                          amount=fxcm_trading_configuration.mean_close_amount)
-                    logger.info("############  Get half closed position informations down below  ################")
-                    connexion.get_closed_positions().T
-                    recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
-                    deconnexion_from_fxcm
+                    if tradePosition[index_devises][15] == fxcm_trading_configuration.order_amount:
+                        logger.info("############  Close the half of the current buy position  ################")
+                        # Close half of the position with the trade id here and sell the position
+                        connexion = connexion_to_fxcm()
+                        connexion.close_trade(trade_id=tradePosition[index_devises][2],
+                                              amount=fxcm_trading_configuration.mean_close_amount)
+                        logger.info("############  Get half closed position informations down below  ################")
+                        connexion.get_closed_positions().T
+                        recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
+                        deconnexion_from_fxcm
+                    else:
+                        logger.info("############  We have already close a mean limit position for security reason  ################")
 
                 else:
                     logger.info(
@@ -146,16 +149,18 @@ def TradingOrder(devise):
 
                 # Sell the half of the position and let the other half going forward
                 elif -1 in close_list or float(close) < float(mean_limit):
-                    logger.info("############  Close the half of the current sell position  ################")
-                    # Close half of the position with the trade id here and sell the position
-                    connexion = connexion_to_fxcm()
-                    connexion.close_trade(trade_id=tradePosition[index_devises][2],
-                                          amount=fxcm_trading_configuration.mean_close_amount)
-                    logger.info("############  Get half closed position informations down below  ################")
-                    connexion.get_closed_positions().T
-                    recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
-                    deconnexion_from_fxcm
-
+                    if tradePosition[index_devises][15] == fxcm_trading_configuration.order_amount:
+                        logger.info("############  Close the half of the current sell position  ################")
+                        # Close half of the position with the trade id here and sell the position
+                        connexion = connexion_to_fxcm()
+                        connexion.close_trade(trade_id=tradePosition[index_devises][2],
+                                              amount=fxcm_trading_configuration.mean_close_amount)
+                        logger.info("############  Get half closed position informations down below  ################")
+                        connexion.get_closed_positions().T
+                        recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
+                        deconnexion_from_fxcm
+                    else:
+                        logger.info("############  We have already close a mean limit position for security reason  ################")
                 else:
                     logger.info(
                         "############  Close price not reached stay in the current sell position  ################")

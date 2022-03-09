@@ -10,7 +10,7 @@ fxcm_trading_configuration = Config().fxcm_trading_config
 def multi_process_trading():
     p = Process(target=Bot_Starter, name='bot_process')
     p.start()
-    p.join(timeout=400)
+    p.join(timeout=295)
     p.terminate()
 
 def Bot_Starter():

@@ -9,7 +9,7 @@ fxcm:
   mean_close_amount: 50
   devises: ['USD/JPY', 'GBP/USD']
   period: "m5"
-  number: 10000
+  number: 7000
 
 prophet:
   predictions: 1
