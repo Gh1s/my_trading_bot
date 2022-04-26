@@ -1,7 +1,7 @@
 import logging
 import os
 import yaml
-from config.bot_models import Fxcm_Trading_Config, Fxcm_Connection_Config, Prophet_Config, Chart_Parameters, Debug_Config
+from config.bot_models import *
 
 logger = logging.getLogger('configuration')
 
@@ -15,6 +15,7 @@ class Config:
     prophet_config = None
     chart_parameters = None
     debug_conf = None
+    trading_config = None
 
     # Singleton
     def __new__(cls):
@@ -50,6 +51,7 @@ class Config:
         self.fxcm_trading_config = Fxcm_Trading_Config(self.config_yaml)
         self.prophet_config = Prophet_Config(self.config_yaml)
         self.chart_parameters = Chart_Parameters(self.config_yaml)
+        self.trading_config = Trading_Config(self.config_yaml)
 
     def override_with_os_variable(self):
         print("#Config# : override_with_os_variable")

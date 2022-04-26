@@ -7,9 +7,9 @@ fxcm:
   log_file: "log.txt"
   order_amount: 100
   mean_close_amount: 50
-  devises: ['USD/JPY', 'GBP/USD', 'EUR/USD']
+  devises: ['EUR/USD']
   period: "m5"
-  number: 5000
+  number: 10000
 
 prophet:
   predictions: 1
@@ -25,3 +25,7 @@ yfinance:
   tickers: "EURUSD=X"
   period: "1mo"
   interval: "5m"
+
+trading:
+  sleeping_time: 60
+  process_timeout: 350
