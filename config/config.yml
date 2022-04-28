@@ -28,4 +28,4 @@ yfinance:
 
 trading:
   sleeping_time: 60
-  process_timeout: 350
+  process_timeout: 390
