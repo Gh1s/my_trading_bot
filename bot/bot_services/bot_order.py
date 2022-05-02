@@ -130,6 +130,7 @@ def TradingOrder(devise):
                         deconnexion_from_fxcm
                     else:
                         logger.info("############  We have already close a mean limit position for security reason  ################")
+                        recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
 
                 else:
                     logger.info(
@@ -161,6 +162,7 @@ def TradingOrder(devise):
                         deconnexion_from_fxcm
                     else:
                         logger.info("############  We have already close a mean limit position for security reason  ################")
+                        recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
                 else:
                     logger.info(
                         "############  Close price not reached stay in the current sell position  ################")

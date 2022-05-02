@@ -43,7 +43,7 @@ class Debug_Config:
         self.debug = config_yaml['debug_log']
 
 
-class Trading_config:
+class Trading_Config:
     def __init__(self, config_yaml):
         self.sleeping_time = config_yaml['trading']['sleeping_time']
         self.process_timeout = config_yaml['trading']['process_timeout']
