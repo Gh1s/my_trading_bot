@@ -6,13 +6,14 @@ from bot.bot_services.bot_order import TradingOrder
 from config.bot_config import logger, Config
 
 fxcm_trading_configuration = Config().fxcm_trading_config
-trading_config = Config.trading_config
+trading_config = Config().trading_config
 
 def multi_process_trading():
     p = Process(target=Bot_Starter, name='bot_process')
     p.start()
     p.join(timeout=trading_config.process_timeout)
-    p.terminate()
+    logger.info(p.exitcode)
+
 
 def Bot_Starter():
     logger.info("##############################  Trading Bot started  ##############################")
@@ -31,6 +32,7 @@ if __name__ == "__main__":
         start = time.time()
         multi_process_trading()
         end = time.time()
-        range = end - start
-        logger.info("##############################  Trading Bot ended in {0} seconds ##############################".format(int(range)))
+        process_duration = end - start
+        logger.info("##############################  Trading Bot ended in {0} seconds ##############################"
+                    .format(int(process_duration)))
         sleep(trading_config.sleeping_time)

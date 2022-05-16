@@ -54,3 +54,8 @@ def check_open_devise(tradePosition):
     logger.info(
         "##############   We have open positions for those devises {0}  ##############".format(list_open_devises))
     return list_open_devises
+
+def get_trade_position(connection):
+    trade_position = connection.get_open_positions().T
+    logger.info("############  Get the current open positions on FXCM: {0}  ###############".format(trade_position))
+    return trade_position

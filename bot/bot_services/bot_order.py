@@ -1,7 +1,7 @@
 from analysis_and_prediction.analysis_services.bot_analysis import prediction, sell_analysis, buy_analysis, \
     dataframe_list_to_decimal, trend_analysis_sell, trend_analysis_buy, close_position
 from bot.bot_services.bot_services import check_open_devise, connexion_to_fxcm, deconnexion_from_fxcm
-from bot.bot_services.bot_services import recap_trading_analysis
+from bot.bot_services.bot_services import recap_trading_analysis, get_trade_position
 from config.bot_config import Config, logger
 
 fxcm_trading_configuration = Config().fxcm_trading_config
@@ -14,8 +14,7 @@ def TradingOrder(devise):
     logger.info("############  Get the data for {0} ###############".format(devise))
     df = connexion.get_candles(devise, period=fxcm_trading_configuration.period,
                                number=fxcm_trading_configuration.number)
-    tradePosition = connexion.get_open_positions().T
-    logger.info("############  Get the current open positions on FXCM: {0}  ###############".format(tradePosition))
+    trade_position = get_trade_position(connexion)
     logger.info("############  Downloading data ok closing connexion in progress {0} ###############".format(devise))
     connexion.close()
     logger.info("############  Closing connexion ok ###############")
@@ -40,7 +39,7 @@ def TradingOrder(devise):
     logger.info("#######   {0}  ########".format(devise))
     logger.info("#######   Check if a position is open for the {0} devise  ########".format(devise))
 
-    if len(tradePosition.columns) == 0:
+    if len(trade_position.columns) == 0:
         logger.info("#######   No open position for {0} check if price > upper limit or < lower limit  ########"
                     .format(devise))
         if -1 in sell_position and trend_analysis_sell(trend) == 'SELL':
@@ -49,9 +48,9 @@ def TradingOrder(devise):
             connexion.open_trade(symbol=devise, amount=fxcm_trading_configuration.order_amount, is_buy=False,
                                  time_in_force="GTC", order_type="AtMarket", is_in_pips=True)
             logger.info("############  Get open position information down below  ################")
-            connexion.get_open_positions().T
+            get_trade_position(connexion)
             recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
-            deconnexion_from_fxcm
+            deconnexion_from_fxcm(connexion)
 
         elif -1 in buy_position and trend_analysis_buy(trend) == 'BUY':
             logger.info("############  Current price < lower limit => Buy Buy Buy  ################")
@@ -59,17 +58,17 @@ def TradingOrder(devise):
             connexion.open_trade(symbol=devise, amount=fxcm_trading_configuration.order_amount, is_buy=True,
                                  time_in_force="GTC", order_type="AtMarket", is_in_pips=True)
             logger.info("############  Get open position information down below  ################")
-            connexion.get_open_positions().T
+            get_trade_position(connexion)
             recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
-            deconnexion_from_fxcm
+            deconnexion_from_fxcm(connexion)
 
         else:
             logger.info("############  No opportunity for the moment => Stand By Position  ################")
             recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
 
-    elif len(tradePosition.columns) != 0:
+    elif len(trade_position.columns) != 0:
         logger.info("We have some open positions control if we have one for {0}".format(devise))
-        list_open_devises = check_open_devise(tradePosition)
+        list_open_devises = check_open_devise(trade_position)
 
         if devise not in list_open_devises:
 
@@ -81,9 +80,9 @@ def TradingOrder(devise):
                 connexion.open_trade(symbol=devise, amount=fxcm_trading_configuration.order_amount, is_buy=False,
                                      time_in_force="GTC", order_type="AtMarket", is_in_pips=True)
                 logger.info("############  Get open position information down below  ################")
-                connexion.get_open_positions().T
+                get_trade_position(connexion)
                 recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
-                deconnexion_from_fxcm
+                deconnexion_from_fxcm(connexion)
 
             elif -1 in buy_position and trend_analysis_buy(trend) == 'BUY':
                 logger.info("############  Current price < lower limit => Buy Buy Buy {0}  ################"
@@ -92,9 +91,9 @@ def TradingOrder(devise):
                 connexion.open_trade(symbol=devise, amount=fxcm_trading_configuration.order_amount, is_buy=True,
                                      time_in_force="GTC", order_type="AtMarket", is_in_pips=True)
                 logger.info("############  Get open position information down below  ################")
-                connexion.get_open_positions().T
+                get_trade_position(connexion)
                 recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
-                deconnexion_from_fxcm
+                deconnexion_from_fxcm(connexion)
 
             else:
                 logger.info("############  No opportunity for the moment => Stand By Position {0}  ################"
@@ -103,7 +102,7 @@ def TradingOrder(devise):
 
         elif devise in list_open_devises:
             index_devises = list_open_devises.index(devise)
-            if tradePosition[index_devises][14] is True and tradePosition[index_devises][13] == devise:
+            if trade_position[index_devises][14] is True and trade_position[index_devises][13] == devise:
                 logger.info(
                     "############  We have a current buy open position for the following devise: {0}  ################".format(
                         devise))
@@ -112,22 +111,22 @@ def TradingOrder(devise):
                     connexion = connexion_to_fxcm()
                     connexion.close_all_for_symbol(devise)
                     logger.info("############  Get closed position information down below  ################")
-                    connexion.get_closed_positions().T
+                    get_trade_position(connexion)
                     recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
-                    deconnexion_from_fxcm
+                    deconnexion_from_fxcm(connexion)
 
                 # Sell the half of the position and let the other half going forward
                 elif 1 in close_list or float(close) > float(mean_limit):
-                    if tradePosition[index_devises][15] == fxcm_trading_configuration.order_amount:
+                    if trade_position[index_devises][15] == fxcm_trading_configuration.order_amount:
                         logger.info("############  Close the half of the current buy position  ################")
                         # Close half of the position with the trade id here and sell the position
                         connexion = connexion_to_fxcm()
-                        connexion.close_trade(trade_id=tradePosition[index_devises][2],
+                        connexion.close_trade(trade_id=trade_position[index_devises][2],
                                               amount=fxcm_trading_configuration.mean_close_amount)
                         logger.info("############  Get half closed position informations down below  ################")
-                        connexion.get_closed_positions().T
+                        get_trade_position(connexion)
                         recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
-                        deconnexion_from_fxcm
+                        deconnexion_from_fxcm(connexion)
                     else:
                         logger.info("############  We have already close a mean limit position for security reason  ################")
                         recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
@@ -137,29 +136,29 @@ def TradingOrder(devise):
                         "############  Close price not reached stay in the current buy position  ################")
                     recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
 
-            elif not tradePosition[index_devises][14] and tradePosition[index_devises][13] == devise:
+            elif not trade_position[index_devises][14] and trade_position[index_devises][13] == devise:
                 logger.info("############  We have a current sell open position  ################")
                 if 1 in buy_position or float(close) < float(yhat_lower):
                     logger.info("############  Close the current sell position  ################")
                     connexion = connexion_to_fxcm()
                     connexion.close_all_for_symbol(devise)
                     logger.info("############  Get closed position information down below  ################")
-                    connexion.get_closed_positions().T
+                    get_trade_position(connexion)
                     recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
-                    deconnexion_from_fxcm
+                    deconnexion_from_fxcm(connexion)
 
                 # Sell the half of the position and let the other half going forward
                 elif -1 in close_list or float(close) < float(mean_limit):
-                    if tradePosition[index_devises][15] == fxcm_trading_configuration.order_amount:
+                    if trade_position[index_devises][15] == fxcm_trading_configuration.order_amount:
                         logger.info("############  Close the half of the current sell position  ################")
                         # Close half of the position with the trade id here and sell the position
                         connexion = connexion_to_fxcm()
-                        connexion.close_trade(trade_id=tradePosition[index_devises][2],
+                        connexion.close_trade(trade_id=trade_position[index_devises][2],
                                               amount=fxcm_trading_configuration.mean_close_amount)
                         logger.info("############  Get half closed position informations down below  ################")
-                        connexion.get_closed_positions().T
+                        get_trade_position(connexion)
                         recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
-                        deconnexion_from_fxcm
+                        deconnexion_from_fxcm(connexion)
                     else:
                         logger.info("############  We have already close a mean limit position for security reason  ################")
                         recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
@@ -170,11 +169,11 @@ def TradingOrder(devise):
             else:
                 logger.info("############  No opportunity for the moment => Stand By Position  ################")
                 recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
-        else:
-            logger.warn("############   We have an error   ################")
-            recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
-    else:
-        logger.warn("############   We have an error   ################")
-        recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
+    #     else:
+    #         logger.warn("############   We have an error   ################")
+    #         recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
+    # else:
+    #     logger.warn("############   We have an error   ################")
+    #     recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
 
     #recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
