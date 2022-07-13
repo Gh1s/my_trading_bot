@@ -1,4 +1,4 @@
-FROM continuumio/miniconda:latest
+FROM continuumio/miniconda3
 WORKDIR /my_trading_bot
 COPY analysis_and_prediction/* analysis_and_prediction/
 COPY analysis_and_prediction/analysis_services/* analysis_and_prediction/analysis_services/

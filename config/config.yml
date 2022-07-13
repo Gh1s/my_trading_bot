@@ -1,7 +1,7 @@
 debug_log: True
 
 fxcm:
-  token: "c544d10634d6e7fd606890de2aa10115c64a5eb6"
+  token: "33ad2c2c73249386052bcdadd562591ef4140c18"
   log_level: "error" 
   server_mode: "demo"
   log_file: "log.txt"
@@ -27,5 +27,5 @@ yfinance:
   interval: "5m"
 
 trading:
-  sleeping_time: 60
+  sleeping_time: 290
   process_timeout: 390
