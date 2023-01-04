@@ -1,0 +1,21 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+  
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag ghislisinho/forexbot:060
+    - name: Push project to  Registry
+      run: docker push ghislisinho/forexbot:060
