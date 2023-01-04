@@ -3,6 +3,7 @@ import time
 from multiprocessing import Process
 from time import sleep
 from bot.bot_services.bot_order import TradingOrder
+from bot.bot_services.bot_services import connexion_to_fxcm, deconnexion_from_fxcm
 from config.bot_config import logger, Config
 
 fxcm_trading_configuration = Config().fxcm_trading_config
@@ -14,18 +15,20 @@ def multi_process_trading():
     p.join(timeout=trading_config.process_timeout)
     logger.info(p.exitcode)
 
-
 def Bot_Starter():
     logger.info("##############################  Trading Bot started  ##############################")
     try:
+        connexion = connexion_to_fxcm()
         for devise in fxcm_trading_configuration.devises:
-            TradingOrder(devise)
+            TradingOrder(devise, connexion)
         logger.info("############  Trading Analysis finish waiting for next process in 5 min  ###############")
         sys.exit(0)
     except Exception as e:
         logger.error("############  A problem occured when working on FXCM, {0}  ################".format(e))
+        deconnexion_from_fxcm(connexion)
         sys.exit(1)
-
+    finally:
+        deconnexion_from_fxcm(connexion)
 
 if __name__ == "__main__":
     while True:

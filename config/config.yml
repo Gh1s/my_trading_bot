@@ -27,8 +27,8 @@ yfinance:
   interval: "5m"
 
 trading:
-  sleeping_time: 300
-  process_timeout: 90
+  sleeping_time: 295
+  process_timeout: 100
 
 binance:
   api_key: "9XFoJY6fqdSDXur0jwmkSLEYYPv7hzpnR418dVTPn1jn8UJN2dhzaN7XmhS3ibyx"
