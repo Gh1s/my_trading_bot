@@ -18,7 +18,6 @@ def mise_en_forme(data):
 def prediction(data):
     dt = pd.DataFrame()
     dt['ds'] = data.index
-    #ma_liste = mise_en_forme(data['Close'])
     ma_liste = mise_en_forme(data['close'])
     dt['y'] = ma_liste
     #dt['cap'] = 8.5
