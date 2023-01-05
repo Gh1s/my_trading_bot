@@ -1,52 +1,63 @@
+import logging
+import os
 import yaml
+from config.bot_models import *
+
+logger = logging.getLogger('configuration')
 
 
-yaml_file = open('config/config.yml')
-config_yaml = yaml.load(yaml_file, Loader=yaml.FullLoader)
+class Config:
+    # Singleton
+    __instance = None
+    config_yaml = None
+    fxcm_trading_config = None
+    fxcm_connection_config = None
+    prophet_config = None
+    chart_parameters = None
+    debug_conf = None
+    trading_config = None
+
+    # Singleton
+    def __new__(cls):
+        if Config.__instance is None:
+            print("#Config# : new configuration")
+            Config.__instance = object.__new__(cls)
+            print("#Config# : __init__")
+            Config.__instance.read_config_file()
+            Config.__instance.override_with_os_variable()
+            Config.__instance.apply_config()
+            print("#Config# : EO __init__")
+        return Config.__instance
 
 
-class fxcm_connection_config:
-    def __init__(self, config_yaml):
-        self.token = config_yaml['fxcm']['token']
-        self.log_level = config_yaml['fxcm']['log_level']
-        self.server_mode = config_yaml['fxcm']['server_mode']
-        self.log_file = config_yaml['fxcm']['log_file']
+    def read_config_file(self):
+        print("#Config# : read_config_file")
+        yaml_file = open('config/config.yml')
+        self.config_yaml = yaml.load(yaml_file, Loader=yaml.FullLoader)
 
+    def apply_config(self):
+        print("#Config# : apply_config")
+        logger.info("extracting config to class")
+        if self.config_yaml['debug_log']:
+            logging.basicConfig(level=logging.DEBUG,
+                                format="%(asctime)s [%(levelname)s] %(name)-12s - %(message)s",
+                                handlers=[logging.StreamHandler()])
+        else:
+            logging.basicConfig(level=logging.INFO,
+                                format="%(asctime)s [%(levelname)s] %(name)-12 - %(message)s",
+                                handlers=[logging.StreamHandler()])
 
-class fxcm_trading_config:
-    def __init__(self, config_yaml):
-        self.order_amount = config_yaml['fxcm']['order_amount']
-        self.devises = config_yaml['fxcm']['devises']
+        self.fxcm_connection_config = Fxcm_Connection_Config(self.config_yaml)
+        self.fxcm_trading_config = Fxcm_Trading_Config(self.config_yaml)
+        self.prophet_config = Prophet_Config(self.config_yaml)
+        self.chart_parameters = Chart_Parameters(self.config_yaml)
+        self.trading_config = Trading_Config(self.config_yaml)
 
+    def override_with_os_variable(self):
+        print("#Config# : override_with_os_variable")
+        # Surcharge par variable d'environnement
+        self.config_yaml['fxcm']['order_amount'] = os.getenv('ORDER_AMOUNT', self.config_yaml['fxcm']['order_amount'])
+        self.config_yaml['fxcm']['devises'] = os.getenv('DEVISES', self.config_yaml['fxcm']['devises'])
+        self.config_yaml['fxcm']['period'] = os.getenv('PERIOD', self.config_yaml['fxcm']['period'])
+        self.config_yaml['fxcm']['number'] = os.getenv('NUMBER', self.config_yaml['fxcm']['number'])
 
-class yahoo_config:
-    def __init__(self, config_yaml):
-        self.tickers = config_yaml['yahoo_finance']['tickers']
-        self.period = config_yaml['yahoo_finance']['period']
-        self.interval = config_yaml['yahoo_finance']['interval']
-        self.group_by = config_yaml['yahoo_finance']['group_by']
-        self.auto_adjust = config_yaml['yahoo_finance']['auto_adjust']
-        self.threads = config_yaml['yahoo_finance']['threads']
-        self.proxy = config_yaml['yahoo_finance']['proxy']
-
-
-class prophet_config:
-    def __init__(self, config_yaml):
-        self.predictions = config_yaml['prophet']['predictions']
-
-
-class chart_parameters:
-    def __init__(self, config_yaml):
-        self.begin = config_yaml['chart']['parameters']['begin']
-        self.end = config_yaml['chart']['parameters']['end']
-
-
-class Scheduler_Config:
-    SCHEDULER_API_ENABLED = True
-
-
-yahoo_configuration = yahoo_config(config_yaml)
-fxcm_connection_configuration = fxcm_connection_config(config_yaml)
-fxcm_trading_configuration = fxcm_trading_config(config_yaml)
-prophet_configuration = prophet_config(config_yaml)
-chart_parameters_config = chart_parameters(config_yaml)

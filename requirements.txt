@@ -1,8 +1,0 @@
-dash
-flask_apscheduler
-pyyaml
-pandas
-fbprophet
-yfinance
-fxcmpy
-numpy

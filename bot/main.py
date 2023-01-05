@@ -1,28 +1,41 @@
-import logging
-from analysis_and_prediction.analysis_services.bot_analysis import *
-from bot.bot_services.bot_order import TradingOrder
-from bot.bot_services.bot_services import log_mode_debug
+import sys
+import time
+from multiprocessing import Process
 from time import sleep
+from bot.bot_services.bot_order import TradingOrder
+from bot.bot_services.bot_services import connexion_to_fxcm, deconnexion_from_fxcm
+from config.bot_config import logger, Config
 
+fxcm_trading_configuration = Config().fxcm_trading_config
+trading_config = Config().trading_config
 
-if __name__ == "__main__":   
+def multi_process_trading():
+    p = Process(target=Bot_Starter, name='bot_process')
+    p.start()
+    p.join(timeout=trading_config.process_timeout)
+    logger.info(p.exitcode)
+
+def Bot_Starter():
+    logger.info("##############################  Trading Bot started  ##############################")
+    try:
+        connexion = connexion_to_fxcm()
+        for devise in fxcm_trading_configuration.devises:
+            TradingOrder(devise, connexion)
+        logger.info("############  Trading Analysis finish waiting for next process in 5 min  ###############")
+        sys.exit(0)
+    except Exception as e:
+        logger.error("############  A problem occured when working on FXCM, {0}  ################".format(e))
+        deconnexion_from_fxcm(connexion)
+        sys.exit(1)
+    finally:
+        deconnexion_from_fxcm(connexion)
+
+if __name__ == "__main__":
     while True:
-        log_mode_debug()
-        print("############  Get the data ###############")
-        logging.info("############  Get the data ###############")
-        df = get_data()
-        print("############  forecast beginning ###############")
-        logging.info("############  forecast beginning ###############")
-        forecast = prediction(df)
-        yhat_upper = get_last_value(forecast['yhat_upper'])
-        yhat_lower = get_last_value(forecast['yhat_lower'])
-        yhat = get_last_value(forecast['yhat'])
-        try:
-            TradingOrder(yhat_upper, yhat_lower, yhat)
-        except:
-            print("############  Failed to connect to FXCM  ################")
-            logging.error("############  Failed to connect to FXCM  ################")
-        #logging.info("############  Displaying the chart on http://localhost:8050 ###############")
-        logging.info("############  Trading Bot in Action ###############")
-
-        sleep(600)
+        start = time.time()
+        multi_process_trading()
+        end = time.time()
+        process_duration = end - start
+        logger.info("##############################  Trading Bot ended in {0} seconds ##############################"
+                    .format(int(process_duration)))
+        sleep(trading_config.sleeping_time)

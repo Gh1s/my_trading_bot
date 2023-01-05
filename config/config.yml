@@ -1,26 +1,35 @@
 debug_log: True
 
 fxcm:
-  token: "7b7968bfd297e4f512b68ddddef9869be07f98e6"
+  token: "33ad2c2c73249386052bcdadd562591ef4140c18"
   log_level: "error" 
   server_mode: "demo"
   log_file: "log.txt"
   order_amount: 100
-  devises: "EUR/USD"
-
-yahoo_finance:
-  tickers: "EURUSD=X"
-  period: "12d"
-  interval: "5m"
-  group_by: "ticker"
-  auto_adjust: True
-  threads: True
-  proxy: None
+  mean_close_amount: 50
+  devises: ['USD/JPY']
+  period: "m5"
+  number: 10000
 
 prophet:
-  predictions: 30
+  predictions: 1
+  changepoint: 0.001
+  seasonality: 10.0
 
 chart:
   parameters:
-    begin: -500
-    end: -30
+    begin: -5000
+    end: -1
+
+yfinance:
+  tickers: "EURUSD=X"
+  period: "1mo"
+  interval: "5m"
+
+trading:
+  sleeping_time: 295
+  process_timeout: 100
+
+binance:
+  api_key: "9XFoJY6fqdSDXur0jwmkSLEYYPv7hzpnR418dVTPn1jn8UJN2dhzaN7XmhS3ibyx"
+  secret_key: "cwoiKFmfY1felXIvLB3DiQqAr0i9ZVM8T9jgB9rrWKjj91uEWJRs7z6EVkpxzjgH"
