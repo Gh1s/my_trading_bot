@@ -1,7 +1,7 @@
 debug_log: True
 
 fxcm:
-  token: "33ad2c2c73249386052bcdadd562591ef4140c18"
+  token: "9155abfb3e76e78942b6513f3e6a94e7d3ae05a6"
   log_level: "error" 
   server_mode: "demo"
   log_file: "log.txt"
