@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+
+  bigmom-job-integration:
+    image: ghislisinho/forexbot:060
+    environment:
+      - DEVISES=['EUR/USD', 'USD/JPY', 'GBP/USD']
+    volumes:
+      - type: bind
+        source: /home/ec2-user/config.yml
+        target: /my_trading_bot/config/config.yml
+    deploy:
+      replicas: 1
+#      resources:
+#        limits:
+#          memory: 512M
+#        reservations:
+#          memory: 128M
+#    restart: unless-stopped
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:6350/health"]
+#      interval: 30s
+#      timeout: 5s
+#      retries: 3
+
+networks:
+  default:
+    external:
+      name: traderbot
