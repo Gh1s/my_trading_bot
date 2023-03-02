@@ -19,4 +19,4 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file ./bot/Dockerfile --tag ghislisinho/forexbot:061
     - name: Push project to  Registry
-      run: docker push ghislisinho/forexbot:060
+      run: docker push ghislisinho/forexbot:061
