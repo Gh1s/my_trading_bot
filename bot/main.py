@@ -10,17 +10,21 @@ fxcm_trading_configuration = Config().fxcm_trading_config
 trading_config = Config().trading_config
 
 def multi_process_trading():
-    p = Process(target=Bot_Starter, name='bot_process')
-    p.start()
-    p.join(timeout=trading_config.process_timeout)
-    logger.info(p.exitcode)
+    #p = Process(target=Bot_Starter, name='bot_process')
+    processes = [Process(target=Bot_Starter, args=(devise,), name='bot_process')
+                 for devise in fxcm_trading_configuration.devises]
+    for process in processes:
+        process.start()
+        process.join(timeout=trading_config.process_timeout)
+        logger.info('process {0} done'.format(process))
+        logger.info(process.exitcode)
 
-def Bot_Starter():
+def Bot_Starter(devise):
     logger.info("##############################  Trading Bot started  ##############################")
     try:
+        #for devise in fxcm_trading_configuration.devises:
         connexion = connexion_to_fxcm()
-        for devise in fxcm_trading_configuration.devises:
-            TradingOrder(devise, connexion)
+        TradingOrder(devise, connexion)
         logger.info("############  Trading Analysis finish waiting for next process in 5 min  ###############")
         sys.exit(0)
     except Exception as e:

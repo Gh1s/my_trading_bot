@@ -1,13 +1,13 @@
 debug_log: True
 
 fxcm:
-  token: "33ad2c2c73249386052bcdadd562591ef4140c18"
+  token: "9155abfb3e76e78942b6513f3e6a94e7d3ae05a6"
   log_level: "error" 
   server_mode: "demo"
   log_file: "log.txt"
   order_amount: 100
   mean_close_amount: 50
-  devises: ['USD/JPY']
+  devises: ['USD/JPY', 'EUR/USD']
   period: "m5"
   number: 10000
 
@@ -28,7 +28,7 @@ yfinance:
 
 trading:
   sleeping_time: 295
-  process_timeout: 100
+  process_timeout: 295
 
 binance:
   api_key: "9XFoJY6fqdSDXur0jwmkSLEYYPv7hzpnR418dVTPn1jn8UJN2dhzaN7XmhS3ibyx"
