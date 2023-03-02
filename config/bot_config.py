@@ -60,4 +60,5 @@ class Config:
         self.config_yaml['fxcm']['devises'] = os.getenv('DEVISES', self.config_yaml['fxcm']['devises'])
         self.config_yaml['fxcm']['period'] = os.getenv('PERIOD', self.config_yaml['fxcm']['period'])
         self.config_yaml['fxcm']['number'] = os.getenv('NUMBER', self.config_yaml['fxcm']['number'])
+        self.config_yaml['fxcm']['token'] = os.getenv('TOKEN', self.config_yaml['fxcm']['token'])
 

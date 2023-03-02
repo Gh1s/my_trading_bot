@@ -42,7 +42,7 @@ def TradingOrder(devise, connexion):
         logger.info("#######   No open position for {0} check if price > upper limit or < lower limit  ########"
                     .format(devise))
         if -1 in sell_position and trend_analysis_sell(trend) == 'SELL':
-            logger.info("############  Current price > upper limit => Short Short Short  ################")
+            logger.info("############  Current price crossed < upper limit => Short Short Short  ################")
             connexion = connexion_to_fxcm()
             connexion.open_trade(symbol=devise, amount=fxcm_trading_configuration.order_amount, is_buy=False,
                                  time_in_force="GTC", order_type="AtMarket", is_in_pips=True)
@@ -52,7 +52,7 @@ def TradingOrder(devise, connexion):
             #deconnexion_from_fxcm(connexion)
 
         elif -1 in buy_position and trend_analysis_buy(trend) == 'BUY':
-            logger.info("############  Current price < lower limit => Buy Buy Buy  ################")
+            logger.info("############  Current price crossed > lower limit => Buy Buy Buy  ################")
             connexion = connexion_to_fxcm()
             connexion.open_trade(symbol=devise, amount=fxcm_trading_configuration.order_amount, is_buy=True,
                                  time_in_force="GTC", order_type="AtMarket", is_in_pips=True)
@@ -95,7 +95,7 @@ def TradingOrder(devise, connexion):
                 #deconnexion_from_fxcm(connexion)
 
             else:
-                logger.info("############  No opportunity for the moment => Stand By Position {0}  ################"
+                logger.info("############  No opportunity for the moment the folowing devises : {0} => Stand By Position  ################"
                             .format(devise))
                 recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
 
@@ -105,7 +105,8 @@ def TradingOrder(devise, connexion):
                 logger.info(
                     "############  We have a current buy open position for the following devise: {0}  ################".format(
                         devise))
-                if 1 in sell_position or float(close) > float(yhat_upper):
+                #if 1 in sell_position or float(close) > float(yhat_upper):
+                if 1 in sell_position or trend_analysis_buy(trend) != 'BUY':
                     logger.info("############  Close the current buy position  ################")
                     connexion = connexion_to_fxcm()
                     connexion.close_all_for_symbol(devise)
@@ -115,20 +116,20 @@ def TradingOrder(devise, connexion):
                     #deconnexion_from_fxcm(connexion)
 
                 # Sell the half of the position and let the other half going forward
-                elif 1 in close_list or float(close) > float(mean_limit):
-                    if trade_position[index_devises][15] == fxcm_trading_configuration.order_amount:
-                        logger.info("############  Close the half of the current buy position  ################")
-                        # Close half of the position with the trade id here and sell the position
-                        connexion = connexion_to_fxcm()
-                        connexion.close_trade(trade_id=trade_position[index_devises][2],
-                                              amount=fxcm_trading_configuration.mean_close_amount)
-                        logger.info("############  Get half closed position informations down below  ################")
-                        get_trade_position(connexion)
-                        recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
-                        #deconnexion_from_fxcm(connexion)
-                    else:
-                        logger.info("############  We have already close a mean limit position for security reason  ################")
-                        recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
+                # elif 1 in close_list or float(close) > float(mean_limit):
+                #     if trade_position[index_devises][15] == fxcm_trading_configuration.order_amount:
+                #         logger.info("############  Close the half of the current buy position  ################")
+                #         # Close half of the position with the trade id here and sell the position
+                #         connexion = connexion_to_fxcm()
+                #         connexion.close_trade(trade_id=trade_position[index_devises][2],
+                #                               amount=fxcm_trading_configuration.mean_close_amount)
+                #         logger.info("############  Get half closed position informations down below  ################")
+                #         get_trade_position(connexion)
+                #         recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
+                #         #deconnexion_from_fxcm(connexion)
+                #     else:
+                #         logger.info("############  We have already close a mean limit position for security reason  ################")
+                #         recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
 
                 else:
                     logger.info(
@@ -137,7 +138,8 @@ def TradingOrder(devise, connexion):
 
             elif not trade_position[index_devises][14] and trade_position[index_devises][13] == devise:
                 logger.info("############  We have a current sell open position  ################")
-                if 1 in buy_position or float(close) < float(yhat_lower):
+                #if 1 in buy_position or float(close) < float(yhat_lower):
+                if 1 in buy_position or trend_analysis_sell(trend) != 'SELL':
                     logger.info("############  Close the current sell position  ################")
                     connexion = connexion_to_fxcm()
                     connexion.close_all_for_symbol(devise)
@@ -147,20 +149,20 @@ def TradingOrder(devise, connexion):
                     #deconnexion_from_fxcm(connexion)
 
                 # Sell the half of the position and let the other half going forward
-                elif -1 in close_list or float(close) < float(mean_limit):
-                    if trade_position[index_devises][15] == fxcm_trading_configuration.order_amount:
-                        logger.info("############  Close the half of the current sell position  ################")
-                        # Close half of the position with the trade id here and sell the position
-                        connexion = connexion_to_fxcm()
-                        connexion.close_trade(trade_id=trade_position[index_devises][2],
-                                              amount=fxcm_trading_configuration.mean_close_amount)
-                        logger.info("############  Get half closed position informations down below  ################")
-                        get_trade_position(connexion)
-                        recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
-                        #deconnexion_from_fxcm(connexion)
-                    else:
-                        logger.info("############  We have already close a mean limit position for security reason  ################")
-                        recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
+                # elif -1 in close_list or float(close) < float(mean_limit):
+                #     if trade_position[index_devises][15] == fxcm_trading_configuration.order_amount:
+                #         logger.info("############  Close the half of the current sell position  ################")
+                #         # Close half of the position with the trade id here and sell the position
+                #         connexion = connexion_to_fxcm()
+                #         connexion.close_trade(trade_id=trade_position[index_devises][2],
+                #                               amount=fxcm_trading_configuration.mean_close_amount)
+                #         logger.info("############  Get half closed position informations down below  ################")
+                #         get_trade_position(connexion)
+                #         recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
+                #         #deconnexion_from_fxcm(connexion)
+                #     else:
+                #         logger.info("############  We have already close a mean limit position for security reason  ################")
+                #         recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_list)
                 else:
                     logger.info(
                         "############  Close price not reached stay in the current sell position  ################")
