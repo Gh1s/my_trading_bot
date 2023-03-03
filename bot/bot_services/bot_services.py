@@ -1,6 +1,7 @@
 from config.bot_config import Config, logger
 import fxcmpy
 import sys
+from elasticsearch import Elasticsearch
 fxcm_trading_configuration = Config().fxcm_trading_config
 fxcm_connection_configuration = Config().fxcm_connection_config
 
@@ -59,3 +60,40 @@ def get_trade_position(connection):
     trade_position = connection.get_open_positions().T
     logger.info("############  Get the current open positions on FXCM: {0}  ###############".format(trade_position))
     return trade_position
+
+def elasticsearch_services(df):
+
+    mappings = {
+        "properties": {
+            "ds": {"type": "date"},
+            "trend": {"type": "float"},
+            "yhat_lower": {"type": "float"},
+            "yhat_upper": {"type": "float"},
+            "trend_lower": {"type": "float"},
+            "trend_upper": {"type": "float"},
+            "yhat": {"type": "integer"},
+            "close": {"type": "float"}
+        }
+    }
+
+    client = Elasticsearch(
+        "https://localhost:9200",
+        ca_certs="C:\\Users\\grandg\\http_ca.crt",
+        basic_auth=("elastic", "ghislin")
+    )
+
+    client.indices.create(index="forecast", mappings=mappings)
+
+    for i, row in df.iterrows():
+        doc = {
+            "ds": row["ds"],
+            "trend": row["trend"],
+            "yhat_lower": row["yhat_lower"],
+            "yhat_upper": row["yhat_upper"],
+            "trend_lower": row["trend_lower"],
+            "trend_upper": row["trend_upper"],
+            "yhat": row["yhat"],
+            "close": row["close"]
+        }
+
+        client.index(index="forecast", id=i, document=doc)
