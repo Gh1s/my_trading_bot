@@ -15,5 +15,6 @@ RUN pip install -U fxcmpy
 RUN conda install -c anaconda pyyaml
 RUN conda install -c conda-forge python-socketio==5.0.4
 RUN pip install python-engineio==3.9
+RUN conda install -c conda-forge elasticsearch
 
 CMD [ "python", "bot/main.py" ]
