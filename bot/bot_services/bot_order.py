@@ -105,8 +105,8 @@ def TradingOrder(devise, connexion):
                 logger.info(
                     "############  We have a current buy open position for the following devise: {0}  ################".format(
                         devise))
-                #if 1 in sell_position or float(close) > float(yhat_upper):
-                if 1 in sell_position or trend_analysis_buy(trend) != 'BUY':
+                if 1 in sell_position or float(close) > float(yhat_upper):
+                #if 1 in sell_position or trend_analysis_buy(trend) != 'BUY':
                     logger.info("############  Close the current buy position  ################")
                     connexion = connexion_to_fxcm()
                     connexion.close_all_for_symbol(devise)
@@ -138,8 +138,8 @@ def TradingOrder(devise, connexion):
 
             elif not trade_position[index_devises][14] and trade_position[index_devises][13] == devise:
                 logger.info("############  We have a current sell open position  ################")
-                #if 1 in buy_position or float(close) < float(yhat_lower):
-                if 1 in buy_position or trend_analysis_sell(trend) != 'SELL':
+                if 1 in buy_position or float(close) < float(yhat_lower):
+                #if 1 in buy_position or trend_analysis_sell(trend) != 'SELL':
                     logger.info("############  Close the current sell position  ################")
                     connexion = connexion_to_fxcm()
                     connexion.close_all_for_symbol(devise)

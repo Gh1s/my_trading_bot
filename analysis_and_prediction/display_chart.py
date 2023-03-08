@@ -1,7 +1,7 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from flask_apscheduler import APScheduler
+#from flask_apscheduler import APScheduler
 from analysis_and_prediction.analysis_services.bot_analysis import prediction
 #from bot.bot_services.bot_services import log_mode_debug
 from config.bot_config import Config, logger
@@ -19,10 +19,10 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets,
                 external_scripts=["https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" ])
 app.config
-scheduler = APScheduler()
+#scheduler = APScheduler()
 
 
-@scheduler.task('interval', id='get-data', minutes=30)
+#@scheduler.task('interval', id='get-data', minutes=30)
 def get_predictions_and_data():
 
     logger.info("##############################  Chart Analysis Started  ##############################")
@@ -82,6 +82,6 @@ if __name__ == '__main__':
     logger.info("##############   yhat_upper: " + str(yhat_upper) + "  ##############")
     logger.info("##############  yhat_med: " + str(yhat) + "  ##############")
     logger.info("##############   yhat_lower: " + str(yhat_lower) + "  ##############")
-    scheduler.init_app(app)
-    scheduler.start()
+    #scheduler.init_app(app)
+    #scheduler.start()
     app.run_server(debug=True)

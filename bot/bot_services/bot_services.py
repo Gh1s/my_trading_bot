@@ -24,7 +24,6 @@ def deconnexion_from_fxcm(connexion):
     connexion.close()
     logger.info("############################## Logout from FXCM sucessfully  ##############################")
 
-
 def recap_trading_analysis(devise, forecast, sell_position, buy_position, trend, close_position):
     logger.info("############  Trading position status  ################")
     logger.info("Status for the following devise: {0}".format(devise))
@@ -47,7 +46,6 @@ def recap_trading_analysis(devise, forecast, sell_position, buy_position, trend,
     logger.info("##############   trend: " + str(trend) + "  ##############")
     logger.info("##############   close_position: " + str(close_position) + "  ##############")
 
-
 def check_open_devise(tradePosition):
     list_open_devises = []
     for elem in tradePosition.iloc[13]:
@@ -61,8 +59,7 @@ def get_trade_position(connection):
     logger.info("############  Get the current open positions on FXCM: {0}  ###############".format(trade_position))
     return trade_position
 
-def elasticsearch_services(df):
-
+def create_elasticsearch_index(client, index):
     mappings = {
         "properties": {
             "ds": {"type": "date"},
@@ -76,13 +73,21 @@ def elasticsearch_services(df):
         }
     }
 
+    client.indices.create(index=index, mappings=mappings)
+    logger.info("Elastic index created {0}".format(index))
+
+def elasticsearch_connexion():
     client = Elasticsearch(
         "https://localhost:9200",
         ca_certs="C:\\Users\\grandg\\http_ca.crt",
         basic_auth=("elastic", "ghislin")
     )
 
-    client.indices.create(index="forecast", mappings=mappings)
+    return client
+
+def elasticsearch_services(df):
+
+    client = elasticsearch_connexion()
 
     for i, row in df.iterrows():
         doc = {
@@ -96,4 +101,4 @@ def elasticsearch_services(df):
             "close": row["close"]
         }
 
-        client.index(index="forecast", id=i, document=doc)
+        client.index(index="traderbot", id=i, document=doc)

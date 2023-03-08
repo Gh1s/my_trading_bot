@@ -33,3 +33,7 @@ trading:
 binance:
   api_key: "9XFoJY6fqdSDXur0jwmkSLEYYPv7hzpnR418dVTPn1jn8UJN2dhzaN7XmhS3ibyx"
   secret_key: "cwoiKFmfY1felXIvLB3DiQqAr0i9ZVM8T9jgB9rrWKjj91uEWJRs7z6EVkpxzjgH"
+
+elasticsearch:
+  host:
+  port:
