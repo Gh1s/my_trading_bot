@@ -1,11 +1,12 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-#from flask_apscheduler import APScheduler
+from flask_apscheduler import APScheduler
 from analysis_and_prediction.analysis_services.bot_analysis import prediction
 #from bot.bot_services.bot_services import log_mode_debug
 from config.bot_config import Config, logger
 import fxcmpy
+import pandas as pd
 
 
 chart_parameters_config = Config().chart_parameters
@@ -19,32 +20,21 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets,
                 external_scripts=["https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" ])
 app.config
-#scheduler = APScheduler()
+scheduler = APScheduler()
 
-
-#@scheduler.task('interval', id='get-data', minutes=30)
+@scheduler.task('interval', id='get-data', minutes=5)
 def get_predictions_and_data():
 
     logger.info("##############################  Chart Analysis Started  ##############################")
-    connexion = fxcmpy.fxcmpy(access_token=fxcm_connection_configuration.token,
-                              log_level="error",
-                              server=fxcm_connection_configuration.server_mode,
-                              log_file=fxcm_connection_configuration.log_file)
-    df = connexion.get_candles(fxcm_trading_configuration.devises, period=fxcm_trading_configuration.period,
-                               number=fxcm_trading_configuration.number)
-    df['close'] = df[["bidclose", "askclose"]].mean(axis=1)
-    df.index = df.index.strftime('%Y/%m/%d %H:%M:%S')
-    forecast = prediction(df)
-
-    return forecast, df
+    forecast = pd.read_csv('traderbot_graph.csv')
 
 
-forecast, df = get_predictions_and_data()
+forecast = get_predictions_and_data()
 
 
 app.layout = html.Div(children=[
 
-    html.Div(children=fxcm_trading_configuration.devises + ''' Chart Analysis. '''),
+    html.Div(children=fxcm_trading_configuration.devises[0] + ''' Chart Analysis. '''),
 
     dcc.Graph(
         id='trading-order',
@@ -57,7 +47,7 @@ app.layout = html.Div(children=[
                 {'x': forecast['ds'][begin_param:end_param], 'y': forecast['trend'][begin_param:end_param], 'type': 'line', 'name': 'trend'}
             ],
             'layout': {
-                'title': fxcm_trading_configuration.devises + ' Real Time Visualisation'
+                'title': fxcm_trading_configuration.devises[0] + ' Real Time Visualisation'
             },
         },
         style={'height': '100vh'}

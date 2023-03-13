@@ -22,6 +22,7 @@ def TradingOrder(devise, connexion):
 
     logger.info("##############################  Prophet analysis  ##############################")
     forecast = prediction(df)
+    forecast.to_csv('traderbot_graph.csv')
     mean_limit = float(forecast['yhat'].iloc[-2:-1])
     mean_limit = '{0:.6f}'.format(mean_limit)
     yhat_upper = float(forecast['yhat_upper'].iloc[-2:-1])

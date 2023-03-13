@@ -7,7 +7,7 @@ fxcm:
   log_file: "log.txt"
   order_amount: 100
   mean_close_amount: 50
-  devises: ['USD/JPY', 'EUR/USD']
+  devises: ['USD/JPY']
   period: "m5"
   number: 10000
 
